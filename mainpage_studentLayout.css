@@ -10,15 +10,6 @@
 {
 	width: 100%;
 }
-/*.col-md-3
-{
-	height: 500px;
-	text-align: center;
-}
-.col-md-6
-{
-	height: 500px;
-}*/
 /* Create three unequal columns that floats next to each other */
 .column {
 	text-align: center;
@@ -36,6 +27,7 @@
 .middle {
 	width: 50%;
 	border-left: 1px solid #cccccc;
+	position: relative;
 }
 /* Clear floats after the columns */
 .row:after {
