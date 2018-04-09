@@ -29,9 +29,13 @@
 	border-left: 1px solid #cccccc;
 	position: relative;
 }
-/* Clear floats after the columns */
+.iframe:after {
+	height: 100%;
+	width: 100%;
+}
+/* Clear floats after the columns *//*
 .row:after {
     content: "";
     display: table;
     clear: both;
-}
+}*/

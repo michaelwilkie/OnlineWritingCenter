@@ -1,0 +1,77 @@
+<header>
+	<title>CS422: Online Writing Center</title>
+	<link rel="stylesheet" href=
+  "https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="mainpage_studentLayout.css">
+	
+</header>
+<body onload="startTimer();setSize()">
+	<script>
+		var time = 0;
+		var timerID;
+		
+		String.prototype.toHHMMSS = function () {
+			var sec_num = parseInt(this, 10); // don't forget the second param
+			var hours   = Math.floor(sec_num / 3600);
+			var minutes = Math.floor((sec_num - (hours * 3600)) / 60);
+			var seconds = sec_num - (hours * 3600) - (minutes * 60);
+
+			if (hours   < 10) {hours   = "0"+hours;}
+			if (minutes < 10) {minutes = "0"+minutes;}
+			if (seconds < 10) {seconds = "0"+seconds;}
+			return hours+':'+minutes+':'+seconds;
+		}
+		function startTimer()
+		{
+			timerID = window.setInterval(updateTimer, 1000);
+		}
+		function updateTimer()
+		{
+			time++;
+			document.getElementById("timestamp").innerHTML = "Time: " + time.toString().toHHMMSS();
+		}
+		function setSize()
+		{			
+			document.getElementById("documentframe").style.width = "100%";
+			document.getElementById("documentframe").style.height = "100%";
+		}
+	</script>
+	<!-- Top Container -->
+	<div id="topbar">
+		<div id="topbar_inner">
+			<div class="right1" style="float: right;">
+			
+				<!--<input class="btn" type="button" value="Welcome"/> -->
+				<a href="mainpage_student.html">Home</a>
+				<a href="search.html">Search</a>
+				<a href="test.html">Test Page</a>
+				
+			</div>
+			<div class="left1"><h1>Online Writing Center</h1></div>
+			<div class="right1" style="float: right;">
+				
+				<input id="switchbutton" class="btn" type="button" value="Switch to Tutor View"/>
+				
+			</div>
+		</div>
+	</div>
+	<!-- Center Area -->
+	
+	<hr>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-3">
+				<h2>Tutoring Session:</h2>
+				<p id="timestamp">Time: 0:00:00</p>
+			</div>
+		
+			<div class="col-md-9">
+				<iframe id="documentframe" src="https://docs.google.com/document/d/1b99fZ-5ZCdk2u6eDWVFiSBIhOVrhXnVkz65sNI_MdAE/edit">
+					<p> Your browser does not support iframe </p>
+				</iframe>
+			</div>
+		</div> 
+	</div>
+</body>

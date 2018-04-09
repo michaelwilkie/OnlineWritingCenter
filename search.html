@@ -1,0 +1,93 @@
+<header>
+	<title>CS422: Online Writing Center</title>
+	<link rel="stylesheet" href=
+  "https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="mainpage_studentLayout.css">
+	<script>
+		var tutorlist = ["John Smith"		,
+						 "John Smith Smith"	,
+						 "John John Smith"	,
+						 "John Smith Sr."	,
+						 "John Smith Jr."	,
+						 "John Smith III"	,
+						 "John P. Smith"	,
+						 "John Q. Smith"	]
+						 
+		var repeatnotfound = false;
+		function Search() 
+		{
+			ClearSearch();
+			var list = document.getElementById('searchresults');
+			var firstname = document.getElementById('searchbar').value;
+			var foundone = false;
+			for (var i = 0; i < tutorlist.length; i++)
+			{
+				if (tutorlist[i].includes(firstname))
+				{
+					foundone = true;
+					repeatnotfound = false;
+					var entry = document.createElement('li');
+					entry.appendChild(document.createTextNode(tutorlist[i]));
+					list.appendChild(entry);
+					document.getElementById('clearbutton').style.display = 'block';
+				}
+			}
+			if (!foundone)
+			{
+				if (!repeatnotfound)
+					$(searchresults).append("No results");
+				repeatnotfound = true;
+			}
+		}
+		function ClearSearch() 
+		{
+			document.getElementById('clearbutton').style.display = 'none';
+			$(searchresults).empty();
+		}
+	</script>
+</header>
+<body>
+	<!-- Top Container -->
+	<div id="topbar">
+		<div id="topbar_inner">
+			<div class="right1" style="float: right;">
+			
+				<!--<input class="btn" type="button" value="Welcome"/> -->
+				<a href="mainpage_student.html">Home</a>
+				<a href="search.html">Search</a>
+				<a href="test.html">Test Page</a>
+				
+			</div>
+			<div class="left1"><h1>Online Writing Center</h1></div>
+			<div class="right1" style="float: right;">
+				
+				<input id="switchbutton" class="btn" type="button" value="Switch to Tutor View"/>
+				
+			</div>
+		</div>
+	</div>
+	<!-- Center Area -->
+	
+	<hr>
+	<h2 style="text-align: left;padding-left: 100px;">Search</h2>
+	<div class="row" style="height: 100px;">
+	
+		<div class="column left">
+				Search for tutor:
+		</div>
+		
+		<div class="column right">
+			<input type="submit" id="clearbutton" value="Clear results" onclick="ClearSearch()" style="display: none;float:right;" />
+			<input type="submit" value="Find" onclick="Search()" style="float: right" />
+			<div style="overflow: hidden; padding-right: .5em;">
+				<input type="text" id="searchbar"/>
+			</div>
+			
+		</div>
+	</div>
+	<div style="float: left; padding-left: 30px;">Search results:</div>
+	<br>
+	<ul id="searchresults"></ul>
+</body>
