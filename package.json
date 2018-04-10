@@ -18,7 +18,11 @@
   "dependencies": {
     "express": "^4.16.3",
     "google-auth-library": "^0.12.0",
-    "googleapis": "^27.0.0"
+    "googleapis": "^27.0.0",
+    "rapidapi-connect": "0.0.6"
+  },
+  "directories": {
+    "test": "test"
   },
   "description": ""
 }
