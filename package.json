@@ -1,0 +1,24 @@
+{
+  "name": "onlinewritingcenter",
+  "version": "1.0.0",
+  "main": "gdrive_node.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/michaelwilkie/OnlineWritingCenter.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/michaelwilkie/OnlineWritingCenter/issues"
+  },
+  "homepage": "https://github.com/michaelwilkie/OnlineWritingCenter#readme",
+  "dependencies": {
+    "express": "^4.16.3",
+    "google-auth-library": "^0.12.0",
+    "googleapis": "^27.0.0"
+  },
+  "description": ""
+}
