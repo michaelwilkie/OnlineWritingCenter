@@ -36,3 +36,13 @@
   margin-top: 10px;
   padding: 10px;
 }
+
+.tutor {
+  position: relative;
+  color:black;
+}
+
+.profileImg {
+  height: 100px;
+  width: 100px;
+}
