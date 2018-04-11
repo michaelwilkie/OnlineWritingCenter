@@ -1,4 +1,5 @@
 var time = 0;
+var timexpire = 50 * 60;
 var timerID;
 		
 String.prototype.toHHMMSS = function () {
@@ -14,6 +15,7 @@ String.prototype.toHHMMSS = function () {
 function startTimer()
 {
 	timerID = window.setInterval(updateTimer, 1000);
+	document.getElementById("timexpire").innerHTML = "Expire: " + timexpire.toString().toHHMMSS();
 }
 function updateTimer()
 {
@@ -22,6 +24,6 @@ function updateTimer()
 }
 function setSize()
 {			
-	document.getElementById("documentframe").style.width = "100%";
+	document.getElementById("documentframe").style.width = "115%";
 	document.getElementById("documentframe").style.height = "100%";
 }
