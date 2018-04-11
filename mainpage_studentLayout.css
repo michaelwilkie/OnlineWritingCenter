@@ -12,7 +12,6 @@
 }
 /* Create three unequal columns that floats next to each other */
 .column {
-	text-align: center;
     float: left;
     padding: 10px;
     height: 100%; /* Should be removed. Only for demonstraon */
@@ -39,6 +38,13 @@
 .card {
   margin-top: 10px;
   padding: 10px;
+}
+
+.card-footer{
+  position:absolute;
+  bottom:0;
+  left: 0;
+  width:100%;
 }
 
 .tutor {
