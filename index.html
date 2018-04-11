@@ -1,0 +1,55 @@
+<header>
+  <title>CS422: Online Writing Center</title>
+  <link rel="stylesheet" href=
+  "https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="mainpage_studentLayout.css">
+</header>
+<body>
+  <!-- Top Container -->
+  <div id="topbar">
+    <div id="topbar_inner">
+      <div class="right1" style="float: right;">
+      
+        <!--<input class="btn" type="button" value="Welcome"/> -->
+        <a href="mainpage_student.html" style="padding: 5px;">Home</a>
+		<a href="tutors.html" style="padding: 5px;">Tutors</a>
+		<a href="test.html" style="padding: 5px;">Test Page</a>
+        
+      </div>
+      <div class="left1"><h1>Online Writing Center</h1></div>
+      <div class="right1" style="float: right;">
+        
+        <input id="switchbutton" class="btn" type="button" value="Switch to Tutor View"/>
+        
+      </div>
+    </div>
+  </div>
+  <!-- Center Area -->
+  
+  <hr>
+  <div class="row">
+    <div class="column left">
+      <h2>Schedule</h2>
+      <iframe src="https://calendar.google.com/calendar/embed?src=uic.edu_rggnjp2kco17evk4dkoda7d458%40group.calendar.google.com&ctz=America%2FChicago" style="border: 0" width="90%" frameborder="0" scrolling="no"></iframe>
+      <input id="schedulebutton" class="btn" type="button" value="Set Appointment"
+      style="background-color: darkcyan; color: white;"/>
+    </div>
+    
+    <div class="column middle">
+      <h2>All Documents</h2>
+      <!--Add buttons to initiate auth sequence and sign out-->
+      <button id="authorize-button" style="display: none;">Authorize</button>
+      <button id="signout-button" style="display: none;">Sign Out</button>
+    </div>
+    
+    <div class="column right" id="rightCol">
+      <h2>Notifications</h2>
+      <ul class="list-group">
+		<li class="list-group-item">
+			<a href="tutorsession.html" style="padding: 5px;">Appointment with student</a>
+		</li>
+    </div>
+  </div> 
+</body>

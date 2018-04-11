@@ -1,5 +1,5 @@
 var time = 0;
-var timexpire = 50 * 60;
+var timexpire = 10;// * 60;
 var timerID;
 		
 String.prototype.toHHMMSS = function () {
@@ -21,6 +21,13 @@ function updateTimer()
 {
 	time++;
 	document.getElementById("timestamp").innerHTML = "Time: " + time.toString().toHHMMSS();
+	if (time >= timexpire)
+	{
+		window.clearInterval(timerID);
+		alert("Tutoring session has expired! Click ok to continue to home page.");
+		var index = document.location.href.lastIndexOf('/');
+		document.location.href = document.location.href.substr(0, index + 1) + "index.html";
+	}
 }
 function setSize()
 {			
