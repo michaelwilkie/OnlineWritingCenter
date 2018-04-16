@@ -6,7 +6,13 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<link rel="stylesheet" href="mainpage_studentLayout.css">
 </header>
-<body>
+<body onload="drawTables()">
+	<script src="search.js"></script>
+	<script>
+	$(document).on("keyup", function() {
+		Search();
+	});
+	</script>
   <!-- navbar   -->
   <nav class="navbar navbar-expand-lg navbar-toggleable-md navbar-light bg-light">
   	<a class="navbar-brand" href="#"><h2>Online Writing Center</h2></a>
@@ -39,7 +45,7 @@
 	
 	<hr>
 	<div class="row">
-		<div class="column left">
+		<div class="col-xs-3 left">
 			<div class="text-center">
 				<h3>Schedule</h3>
 				<form action="scheduleForm.html">
@@ -49,91 +55,28 @@
 			</div>
 		</div>
 		
-		<div class="column middle">
+		<div class="col-xs-6 middle">
 			<div class="text-center" style="background-color:darkcyan; color:white;">
 				<h3>Avaliable Tutors</h3>
 				<!-- <input id="schedulebutton" align="center" class="btn" type="button" value="Access Your Google Drive"
                     style="background-color: darkcyan; color: white;"/> -->
             </div>
 
-            <div width=300px>
-                <form action="tutors.html"  >
-                    <input type="submit" value="   Search    " style="background-color:steelblue; color:white;"/>
-                </form>
+            <div style="padding-left: 15px;">
+                
+                <input id="searchbar" type="text" placeholder="Search" 
+				style="background-color:light-gray;padding: 5px;"/>
+                
             </div>
 
-            <div class="tutor" >
-                <!-- List of Tutors -->
-                <div>
-                    <table class="tutor-table">
-                        <tr style="padding:15px;">
-                            <th style="padding:15px;"><img class="profileImg" src="anon.png" ></th>
-                            <th style="padding:15px; width: 50%;">John Doe<br/>Major: Math</th>
-                            <th style="padding:15px; float:left;">
-                                <button class="btn" style="background-color:lavender">View Profile</button><br/><br/>
-                                <button class="btn" style="background-color:paleturquoise;">Set Appointment</button>
-                            </th>
-                        </tr>
-                    </table>
-                </div>
-
-                <div >
-<table>
-                        <tr style="padding:15px;">
-                            <th style="padding:15px;"><img class="profileImg" src="anon.png" ></th>
-                            <th style="padding:15px; width: 50%;">Ashley Bridge<br/>Major: Psychology</th>
-                            <th style="padding:15px; float:left;">
-                                <button class="btn" style="background-color:lavender">View Profile</button><br/><br/>
-                                <button class="btn" style="background-color:paleturquoise">Set Appointment</button>
-                            </th>
-                        </tr>
-                    </table>
-                </div>
-
-                <div >
-                    <table>
-                        <tr style="padding:15px;">
-                            <th style="padding:15px;"><img class="profileImg" src="anon.png" ></th>
-                            <th style="padding:15px; width: 50%;">Mike Justice<br/>Major: Computer Science</th>
-                            <th style="padding:15px; float:left;">
-                                <button class="btn" style="background-color:lavender">View Profile</button><br/><br/>
-                                <button class="btn" style="background-color:paleturquoise">Set Appointment</button>
-                            </th>
-                        </tr>
-                    </table>
-                </div>
-
-                <div >
-                    <table>
-                        <tr style="padding:15px;">
-                            <th style="padding:15px;"><img class="profileImg" src="anon.png" ></th>
-                            <th style="padding:15px; width: 50%;">Anna Snow<br/>Major: English</th>
-                            <th style="padding:15px; float:left;">
-                                <button class="btn" style="background-color:lavender">View Profile</button><br/><br/>
-                                <button class="btn" style="background-color:paleturquoise">Set Appointment</button>
-                            </th>
-                        </tr>
-                    </table>
-                </div>
-
-                <div >
-                        <table>
-                            <tr style="padding:15px;">
-                                <th style="padding:15px;"><img class="profileImg" src="anon.png" ></th>
-                                <th style="padding:15px; width: 50%;">Daniel Dodge<br/>Major: Aerospace</th>
-                                <th style="padding:15px; float:left;">
-                                    <button class="btn" style="background-color:lavender">View Profile</button><br/><br/>
-                                    <button class="btn" style="background-color:paleturquoise">Set Appointment</button>
-                                </th>
-                            </tr>
-                        </table>
-                    </div>
+            <div class="tutor" id="tutors">
+              <!-- to be filled by search.js -->
             </div>     
             
             
 		</div>
 		
-		<div class="column right" id="rightCol">
+		<div class="col-xs-3 right" id="rightCol">
 			<div class="text-center">
 				<h3>Notifications</h3>
 			</div>

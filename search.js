@@ -1,57 +1,98 @@
 var tutorlist = [];
-
-var req = new XMLHttpRequest();
-req.add
-
+var displaylist = [];
 $.getJSON( "data/tutor.json", function( data ) 
 {
 	tutorlist = data.Tutors;
+	displaylist = tutorlist;
 	console.log((tutorlist));
 });
  
 var repeatnotfound = false;
-function initDictionary()
+function drawTables()
 {
-	var table = document.getElementById("tutortable");
-	
-	for (var i = 0; i < tutorlist.length; i++)
+	var divlist = document.getElementById("tutors");
+	for (var i = 0; i < displaylist.length; i++)
 	{
-		var entry = document.createElement('tr');
-		var td = document.createElement('td');
-		td.innerHTML = tutorlist[i].fname;
-		var td2 = document.createElement('td');
-		td2.innerHTML = tutorlist[i].lname;
-		var td3 = document.createElement('td');
-		td3.innerHTML = tutorlist[i].major;
-		entry.appendChild(td);
-		entry.appendChild(td2);
-		entry.appendChild(td3);
-		table.appendChild(entry);
-		console.log(td);
-		console.log(td2);
-		console.log(td3);
+		var table = document.createElement('table');
+		table.style.borderTop = "solid #CCCCCC";
+		
+		var row = document.createElement('tr');
+		row.style.padding = "15px";
+		
+		var entry = document.createElement('th');
+		entry.style.padding = "15px";
+		entry.id = "img";
+		
+		var img = document.createElement('img');
+		img.className = "profileImg";
+		img.src = "anon.png";
+		
+		var entry2 = document.createElement('th');
+		entry2.style.padding = "15px";
+		entry2.style.width = "50%";
+		entry2.id = "name";
+		entry2.innerHTML = displaylist[i].fname + " " + displaylist[i].lname + "<br>" +
+						displaylist[i].major;
+		
+		var entry3 = document.createElement('th');
+		entry3.style.padding = "15px";
+		entry3.style.cssFloat = "left";
+		entry3.id = "buttons";
+		
+		var button = document.createElement('button');
+		button.className = "btn";
+		button.style.backgroundColor = "pink";
+		button.innerHTML = "View Profile";
+		
+		var button2 = document.createElement('button');
+		button2.className = "btn";
+		button2.style.backgroundColor = "lightgreen";
+		button2.innerHTML = "Set Appointment";
+		
+		// table
+		//	- row
+		//		- entry  -id = img
+		//			- img
+		//		- entry2 -id = name
+		//		- entry3 -id = buttons
+		//			- button
+		//			- button2
+
+		entry3.appendChild(button);
+		entry3.appendChild(button2);
+		entry.appendChild(img);
+		row.appendChild(entry);
+		row.appendChild(entry2);
+		row.appendChild(entry3);
+		table.appendChild(row);
+		divlist.appendChild(table);
 	}
 }
+
+// table
+//	- row
+//		- entry -id = img
+//			- img
+//		- entry2 -id = name
+//		- entry3 -id = buttons
+//			- button
+//			- button2
 function Search() 
 {
-	var input, filter, table, tr, td, i;
+	displaylist = [];
+	ClearSearch();
+	var input, filter;
 	input 	= document.getElementById("searchbar");
 	filter 	= input.value.toUpperCase();
-	table 	= document.getElementById("tutortable");
-	tr 		= table.getElementsByTagName("tr");
-	for (i = 0; i < tr.length; i++)
+	for(var i = 0; i < tutorlist.length; i++)
 	{
-		td = tr[i].getElementsByTagName("td")[0];
-		if (td)
-			if (td.innerHTML.toUpperCase().indexOf(filter) > -1)
-				tr[i].style.display = "";
-			else
-				tr[i].style.display = "none";
+		if ((tutorlist[i].fname + " " + tutorlist[i].lname).toUpperCase().indexOf(filter) > -1)
+			displaylist.push(tutorlist[i]);
 	}
-	//alert(tutorlistQ);
+	
+	drawTables();
 }
 function ClearSearch() 
 {
-	document.getElementById('clearbutton').style.display = 'none';
-	$(searchresults).empty();
+	$(tutors).empty();
 }
