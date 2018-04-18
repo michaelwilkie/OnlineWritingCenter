@@ -5,7 +5,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <script src="scripts/index.js"></script>
-  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" type="text/html" href="css/main.css">
 </header>
 <body>
   <!-- navbar -->
@@ -70,7 +70,11 @@
 		<div class="col-sm-6 center" id="centerCol">
 			<div class="text-center">
 				<h3>Your Documents</h3>
-				<input id="schedulebutton" align="center" class="btn" type="button" value="Access Your Google Drive" onclick="location.href='#'" />
+				<form action="">
+					<!--input id="accessgdrive" align="center" class="btn" type="button" value="Access Your Google Drive" onclick="location.href='#'" /-->
+					<button>Access your Google Drive</button>
+					<input id="m" autocomplete="off" />
+				</form>
 			</div>
 		</div>
 		
@@ -110,19 +114,18 @@
 		</div>
 	</div>
 
-	<!--script src="socket.io/socket.io.js"></script> 
+	<script src="socket.io/socket.io.js"></script> 
 	<script>
 		$(function() {
 		  var socket = io();
 		  $('form').submit(function() {
-		    socket.emit('chat message', $('#m').val());
-		    $('#m').val('');
+		    socket.emit('notification', 'Accessing GDrive');
 		    return false;
 		  });
 
-		  socket.on('chat message', function(msg) {
-		    $('#messages').append($('<li>').text(msg));
+		  socket.on('notification', function(msg) {
+		    $('#m').val(msg);
 		  });
 		});
-	</script-->
+	</script>
 </body>
