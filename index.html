@@ -1,0 +1,128 @@
+<header>
+  <title>CS422: Online Writing Center</title>
+  <link rel="stylesheet" href=
+  "https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="scripts/index.js"></script>
+  <link rel="stylesheet" href="css/main.css">
+</header>
+<body>
+  <!-- navbar -->
+  <nav class="navbar navbar-expand-lg navbar-toggleable-md navbar-light bg-light" >
+  	<a class="navbar-brand" href="#"><h2>Online Writing Center</h2></a>
+	  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+	    <span class="navbar-toggler-icon"></span>
+	  </button>
+
+	  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+	    <ul class="navbar-nav mr-auto" style="display: table; margin-top: auto; margin-bottom: auto">
+	      <li class="nav-item active" style="vertical-align: middle; display: table-cell">
+	        <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
+	      </li>
+	      <li class="nav-item">
+	        <a class="nav-link" href="#">Tutor</a>
+	      </li>
+	    </ul>
+
+	    <div class="d-inline-block pull-right">
+				<p class="text-right">
+					Welcome, student <a href="#">Hai Tran</a><br />
+					<a href="#">Switch to Tutor View &nbsp;</a>
+					<a href="#">Sign out</a>
+				</p>
+			</div>
+
+			<div class="clearfix"></div>
+	  </div>
+	</nav>
+	<hr>
+	<!-- END navbar -->
+	
+  <!-- Main -->
+  <div class="row">
+
+  	<!-- Left Panel -->
+		<div class="col-sm-3 left" id="leftCol">
+			<div class="text-center">
+				<h3>Schedule</h3>
+			</div>
+
+			<!-- Calendar 
+				[Hai] I'm considering whether we should include a 
+				calendar or not. Users may expect unexpected affordances.
+			-->
+			<!-- div id="calendar"></div-->
+
+			<!-- List of upcoming appointments -->
+			<div class="text-center">Upcoming appointments</div>
+			<div id="appointmentList"></div>
+
+			<!-- Make appointment button -->
+			<div class="text-center">
+				<form action="#">
+				<input id="schedulebutton" class="btn" type="submit" value="Set Appointment" />
+				</form>
+			</div>
+		</div>
+		
+		<!-- Center Panel -->
+		<div class="col-sm-6 center" id="centerCol">
+			<div class="text-center">
+				<h3>Your Documents</h3>
+				<input id="schedulebutton" align="center" class="btn" type="button" value="Access Your Google Drive" onclick="location.href='#'" />
+			</div>
+		</div>
+		
+		<!-- Right Panel -->
+		<div class="col-sm-3 left" id="rightCol">
+			<div class="text-center">
+				<h3>Notifications</h3>
+			</div>
+			
+			<div id="notificationList">
+				<div class="card" style="padding: 5px;">
+					<div class="card-body">
+						<p class="card-subtitle mb-2 text-muted"><small>04/11/2018 11:30am</small></p>
+						<p class="card-text text-left">
+							Tutor <a href="#">John Doe</a> has marked your document <a href="#">CS422_GR4</a> as <i>"Finished Reviewing"</i>.
+						</p>
+					</div>
+				</div>
+
+				<div class="card" style="padding: 5px;">
+					<div class="card-body">
+						<p class="card-subtitle mb-2 text-muted"><small>04/11/2018 11:32am</small></p>
+						<p class="card-text text-left">Tutor <a href="#">John Doe</a> has accepted your appointment request.</p>
+						<a href="#" class="card-link text-right">View appointment details</a>
+					</div>
+				</div>
+
+				<div class="card" style="padding: 5px;">
+					<div class="card-body">
+						<p class="card-subtitle mb-2 text-muted"><small>04/11/2018 12:30pm</small></p>
+						<p class="card-text text-left">
+							Tutor <a href="#">John Doe</a> is ready to start a tutoring session. <a href="#">Join Session</a>
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!--script src="socket.io/socket.io.js"></script> 
+	<script>
+		$(function() {
+		  var socket = io();
+		  $('form').submit(function() {
+		    socket.emit('chat message', $('#m').val());
+		    $('#m').val('');
+		    return false;
+		  });
+
+		  socket.on('chat message', function(msg) {
+		    $('#messages').append($('<li>').text(msg));
+		  });
+		});
+	</script-->
+</body>
