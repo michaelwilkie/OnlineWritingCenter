@@ -1,0 +1,274 @@
+<header>
+	<title>CS422: Online Writing Center</title>
+	<link rel="stylesheet" href=
+  "https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="mainpage_studentLayout.css">
+</header>
+<body>
+	 <!-- navbar   -->
+  <nav class="navbar navbar-expand-lg navbar-toggleable-md navbar-light bg-light">
+  	<a class="navbar-brand" href="#"><h2>Online Writing Center</h2></a>
+	  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+	    <span class="navbar-toggler-icon"></span>
+	  </button>
+
+	  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+	    <ul class="navbar-nav mr-auto" style="display: table; margin-top: auto; margin-bottom: auto">
+	      <li class="nav-item active" style="vertical-align: middle; display: table-cell">
+	        <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
+	      </li>
+	      <li class="nav-item">
+	        <a class="nav-link" href="tutor.html">Tutor</a>
+	      </li>
+	    </ul>
+
+	    <div class="d-inline-block pull-right">
+				<p class="text-right">
+					Welcome, student <a href="#">Hai Tran</a><br />
+					<a href="#">Switch to Tutor View &nbsp;</a>
+					<a href="#">Sign out</a>
+				</p>
+			</div>
+
+			<div class="clearfix"></div>
+	  </div>
+	</nav>
+	<!-- /navbar   -->
+	<!-- Center Area -->
+	
+	<hr>
+	<div class="row">
+		<div class="column left">
+      <div class="text-center"><h2>Schedule</h2></div>
+            
+            
+            <!--div class="month"> 
+  <ul>
+    <li class="prev">&#10094;</li>
+    <li class="next">&#10095;</li>
+    <li>April<br><span style="font-size:18px">2018</span></li>
+  </ul>
+</div-->
+<!--div style="width:400px; height:250px;overflow:hidden"-->
+
+<table style="width: 100%">
+            
+ <tr>
+         <td>Mo</td>
+         <td>Tu</td>
+         <td>We</td>
+         <td>Th</td>
+         <td>Fr</td>
+         <td>Sa</td>
+         <td>Su</td>
+    </tr>
+    
+    <tr>
+        <td><button class="btn">1</button></td>
+        <td><button class="btn active">2</button></td>
+        <td><button class="btn">3</button></td>
+        <td><button class="btn">4</button></td>
+        <td><button class="btn">5</button></td>
+        <td><button class="btn">6</button></td>
+        <td><button class="btn">7</button></td>
+    </tr>
+        <td><button class="btn">8</button></td>
+        <td><button class="btn">9</button></td>
+        <td><button class="btn">10</button></td>
+        <td><button class="btn">11</button></td>
+        <td><button class="btn">12</button></td>
+        <td><button class="btn">13</button></td>
+        <td><button class="btn">14</button></td>
+    <tr>
+        <td><button class="btn">15</button></td>
+        <td><button class="btn">16</button></td>
+        <td><button class="btn">17</button></td>
+        <td><button class="btn">18</button></td>
+        <td><button class="btn">19</button></td>
+        <td><button class="btn">20</button></td>
+        <td><button class="btn">21</button></td>
+    </tr>
+    <tr>
+        <td><button class="btn">22</button></td>
+        <td><button class="btn">23</button></td>
+        <td><button class="btn">24</button></td>
+        <td><button class="btn">25</button></td>
+        <td><button class="btn">26</button></td>
+        <td><button class="btn">27</button></td>
+        <td><button class="btn">28</button></td>
+    </tr>
+    <tr>
+        <td><button class="btn">29</button></td>
+        <td><button class="btn">30</button></td>
+    </tr>
+   
+</table>
+            <!--/div-->
+            <div class="text-center">
+            <input id="schedulebutton" class="btn" onclick= "window.location.href='scheduleForm.html'" type="button" value="Set Appointment" style="background-color: darkcyan; color: white;"/>
+          </div>
+            
+		</div>
+		
+		<div class="column middle">
+			<h2>Set an Appointment</h2>
+			<p>When do you want to meet the tutor?</p>
+            <p></p>
+    
+    <table>
+        
+         <tr>
+     <td><input type="radio" name="gender" value="male" checked> Right Now<br></td>
+     <td><input type="radio" name="gender" value="female"> Select Time Slot<br></td>
+
+     </tr>
+        <p></p>
+        
+        <tr>
+            <td>Date: <br> </td>
+            <td><input type="text" name="firstname" value="04/11/2018"><br> </td>
+        </tr>
+      <tr> 
+          <td><input type="text" name="Hour" value="1"><br></td>
+          <td><input type="text" name="Minute" value="30"><br></td> 
+          <!--td><input type="radio" name="timeType" value="morning" checked> AM<br></td>
+          <td><input type="radio" name="timeType" value="night"> PM<br></td-->
+      </tr>  
+    
+        <p></p>
+<tr>
+    <td> Select Tutor :<br> </td>
+    <td><select name="test" multiple>
+    <option>John Doe</option>
+    <option>Shelby Smith</option>
+    <option>David Yang</option>
+    <option>Ernesto Lopez</option>
+    <option>Zoey Mac</option>
+    <option>Lil Wayne</option>
+        </select> </td>
+    
+    </tr>
+            <p></p>
+            
+<tr>
+ <td> Class CRN :<br> </td>
+ <td><select name="test" multiple>
+    <option>ENGL101</option>
+    <option>ENGL102</option>
+    <option>ENGL160</option>
+    <option>ENGL161</option>
+    <option>ANTH101</option>
+    <option>MILS201</option>
+</select> </td>
+    
+    </tr>
+            <p></p>
+
+  <tr>
+        <td></td>
+        <td></td>
+        </tr>
+
+        
+ 
+            
+    <!-- Trigger/Open The Modal -->
+<tr>
+    <td></td> 
+    <td></td>
+    <td><button id="myBtn">Submit Request</button></td>
+        </tr>        
+
+ </table>
+<!-- The Modal -->
+<div id="myModal" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2>Confirmation Complete</h2>
+    </div>
+    <div class="modal-body">
+      <p>Hai Tran, your appointment request has been sent. Please wait and regularly check the OWC the next 24 hours to see your request complete.</p>
+      <p>Redirect yourself back to the main page...</p>
+        <input id="schedulebutton" class="btn" onclick= "window.location.href='index.html'" type="button" value="Home Page" style="background-color: darkcyan; color: white;"/>
+    </div>
+    <div class="modal-footer">
+      <h3>OWC</h3>
+        
+    </div>
+  </div>
+
+</div>
+
+
+<p></p>
+             
+            
+		</div>
+		
+		<div class="column right" id="rightCol">
+	<div class="text-center">
+				<h3>Notifications</h3>
+			</div>
+
+			<div class="card" style="padding: 5px;">
+				<div class="card-body">
+					<p class="card-subtitle mb-2 text-muted"><small>04/11/2018 11:30am</small></p>
+					<p class="card-text text-left">
+						Tutor <a href="#">John Doe</a> has marked your document <a href="#">CS422_GR4</a> as <i>"Finished Reviewing"</i>.
+					</p>
+				</div>
+			</div>
+
+			<div class="card" style="padding: 5px;">
+				<div class="card-body">
+					<p class="card-subtitle mb-2 text-muted"><small>04/11/2018 11:32am</small></p>
+					<p class="card-text text-left">Tutor <a href="#">John Doe</a> has accepted your appointment request.</p>
+					<a href="#" class="card-link text-right">View appointment details</a>
+				</div>
+			</div>
+
+			<div class="card" style="padding: 5px;">
+				<div class="card-body">
+					<p class="card-subtitle mb-2 text-muted"><small>04/11/2018 12:30pm</small></p>
+					<p class="card-text text-left">
+						Tutor <a href="#">John Doe</a> is ready to start a tutoring session. <a href="tutorsession.html">Join Session</a>
+					</p>
+				</div>
+			</div>
+
+		</div>
+	</div> 
+</body>
+
+
+<script>
+// Get the modal
+var modal = document.getElementById('myModal');
+
+// Get the button that opens the modal
+var btn = document.getElementById("myBtn");
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks the button, open the modal 
+btn.onclick = function() {
+    modal.style.display = "block";
+}
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+    modal.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+</script>

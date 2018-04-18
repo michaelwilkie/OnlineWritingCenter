@@ -1,0 +1,169 @@
+<header>
+	<title>CS422: Online Writing Center</title>
+	<link rel="stylesheet" href=
+  "https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="mainpage_studentLayout.css">
+</header>
+<body>
+  <!-- navbar   -->
+  <nav class="navbar navbar-expand-lg navbar-toggleable-md navbar-light bg-light">
+  	<a class="navbar-brand" href="#"><h2>Online Writing Center</h2></a>
+	  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+	    <span class="navbar-toggler-icon"></span>
+	  </button>
+
+	  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+	    <ul class="navbar-nav mr-auto" style="display: table; margin-top: auto; margin-bottom: auto">
+	      <li class="nav-item active" style="vertical-align: middle; display: table-cell">
+	        <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
+	      </li>
+	      <li class="nav-item">
+	        <a class="nav-link" href="tutor.html">Tutor</a>
+	      </li>
+	    </ul>
+
+	    <div class="d-inline-block pull-right">
+				<p class="text-right">
+					Welcome, student <a href="#">Hai Tran</a><br />
+					<a href="tutor-index.html">Switch to Tutor View &nbsp;</a>
+					<a href="#">Sign out</a>
+				</p>
+			</div>
+
+			<div class="clearfix"></div>
+	  </div>
+	</nav>
+	<!-- /navbar   -->
+	
+	<hr>
+	<div class="row">
+		<div class="column left">
+			<div class="text-center">
+				<h3>Schedule</h3>
+				<form action="scheduleForm.html">
+				<input id="schedulebutton" class="btn" type="submit" value="Set Appointment"
+					style="background-color: darkcyan; color: white;"/>
+				</form>
+			</div>
+		</div>
+		
+		<div class="column middle">
+			<div class="text-center" style="background-color:darkcyan; color:white;">
+				<h3>Avaliable Tutors</h3>
+				<!-- <input id="schedulebutton" align="center" class="btn" type="button" value="Access Your Google Drive"
+                    style="background-color: darkcyan; color: white;"/> -->
+            </div>
+
+            <div width=300px>
+                <form action="tutors.html"  >
+                    <input type="submit" value="   Search    " style="background-color:steelblue; color:white;"/>
+                </form>
+            </div>
+
+            <div class="tutor" >
+                <!-- List of Tutors -->
+                <div>
+                    <table class="tutor-table">
+                        <tr style="padding:15px;">
+                            <th style="padding:15px;"><img class="profileImg" src="anon.png" ></th>
+                            <th style="padding:15px; width: 50%;">John Doe<br/>Major: Math</th>
+                            <th style="padding:15px; float:left;">
+                                <button class="btn" style="background-color:lavender">View Profile</button><br/><br/>
+                                <button class="btn" style="background-color:paleturquoise;">Set Appointment</button>
+                            </th>
+                        </tr>
+                    </table>
+                </div>
+
+                <div >
+<table>
+                        <tr style="padding:15px;">
+                            <th style="padding:15px;"><img class="profileImg" src="anon.png" ></th>
+                            <th style="padding:15px; width: 50%;">Ashley Bridge<br/>Major: Psychology</th>
+                            <th style="padding:15px; float:left;">
+                                <button class="btn" style="background-color:lavender">View Profile</button><br/><br/>
+                                <button class="btn" style="background-color:paleturquoise">Set Appointment</button>
+                            </th>
+                        </tr>
+                    </table>
+                </div>
+
+                <div >
+                    <table>
+                        <tr style="padding:15px;">
+                            <th style="padding:15px;"><img class="profileImg" src="anon.png" ></th>
+                            <th style="padding:15px; width: 50%;">Mike Justice<br/>Major: Computer Science</th>
+                            <th style="padding:15px; float:left;">
+                                <button class="btn" style="background-color:lavender">View Profile</button><br/><br/>
+                                <button class="btn" style="background-color:paleturquoise">Set Appointment</button>
+                            </th>
+                        </tr>
+                    </table>
+                </div>
+
+                <div >
+                    <table>
+                        <tr style="padding:15px;">
+                            <th style="padding:15px;"><img class="profileImg" src="anon.png" ></th>
+                            <th style="padding:15px; width: 50%;">Anna Snow<br/>Major: English</th>
+                            <th style="padding:15px; float:left;">
+                                <button class="btn" style="background-color:lavender">View Profile</button><br/><br/>
+                                <button class="btn" style="background-color:paleturquoise">Set Appointment</button>
+                            </th>
+                        </tr>
+                    </table>
+                </div>
+
+                <div >
+                        <table>
+                            <tr style="padding:15px;">
+                                <th style="padding:15px;"><img class="profileImg" src="anon.png" ></th>
+                                <th style="padding:15px; width: 50%;">Daniel Dodge<br/>Major: Aerospace</th>
+                                <th style="padding:15px; float:left;">
+                                    <button class="btn" style="background-color:lavender">View Profile</button><br/><br/>
+                                    <button class="btn" style="background-color:paleturquoise">Set Appointment</button>
+                                </th>
+                            </tr>
+                        </table>
+                    </div>
+            </div>     
+            
+            
+		</div>
+		
+		<div class="column right" id="rightCol">
+			<div class="text-center">
+				<h3>Notifications</h3>
+			</div>
+
+			<div class="card">
+				<div class="card-body">
+					<p class="card-subtitle mb-2 text-muted"><small>04/11/2018 11:30am</small></p>
+					<p class="card-text text-left">
+						Tutor <a href="#">John Doe</a> has marked your document <a href="#">CS422_GR4</a> as <i>"Finished Reviewing"</i>.
+					</p>
+				</div>
+			</div>
+
+			<div class="card">
+				<div class="card-body">
+					<p class="card-subtitle mb-2 text-muted"><small>04/11/2018 11:32am</small></p>
+					<p class="card-text text-left">Tutor <a href="#">John Doe</a> has accepted your appointment request.</p>
+					<a href="#" class="card-link text-right">View appointment details</a>
+				</div>
+			</div>
+			
+			<div class="card" style="padding: 5px;">
+				<div class="card-body">
+					<p class="card-subtitle mb-2 text-muted"><small>04/11/2018 12:30pm</small></p>
+					<p class="card-text text-left">
+						Tutor <a href="#">John Doe</a> is ready to start a tutoring session. <a href="tutorsession.html">Join Session</a>
+					</p>
+				</div>
+			</div>
+
+		</div>
+	</div> 
+</body>
