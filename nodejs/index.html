@@ -4,7 +4,7 @@
   "https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <script src="scripts/index.js"></script>
+  <script type="text/html" src="scripts/index.js"></script>
   <link rel="stylesheet" type="text/html" href="css/main.css">
 </header>
 <body>
@@ -71,9 +71,8 @@
 			<div class="text-center">
 				<h3>Your Documents</h3>
 				<form action="">
-					<!--input id="accessgdrive" align="center" class="btn" type="button" value="Access Your Google Drive" onclick="location.href='#'" /-->
-					<button>Access your Google Drive</button>
-					<input id="m" autocomplete="off" />
+					<input id="accessgdrive" align="center" class="btn" type="button" value="Access Your Google Drive" onclick="location.href='#'" />
+					<!--input id="m" autocomplete="off" /-->
 				</form>
 			</div>
 		</div>
@@ -115,9 +114,12 @@
 	</div>
 
 	<script src="socket.io/socket.io.js"></script> 
+	<script src="scripts/notification.js"></script>
 	<script>
 		$(function() {
 		  var socket = io();
+
+		  /*
 		  $('form').submit(function() {
 		    socket.emit('notification', 'Accessing GDrive');
 		    return false;
@@ -126,6 +128,7 @@
 		  socket.on('notification', function(msg) {
 		    $('#m').val(msg);
 		  });
+		  */
 		});
 	</script>
 </body>
