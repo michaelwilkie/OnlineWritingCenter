@@ -49,9 +49,4 @@
 		"receiverid":"5", 
 		"message":""
 	}
-],
-"Type":[
-	{"id":"1", "name":"File change"},
-	{"id":"2", "name":"Request"},
-	{"id":"3", "name":"Response"}
 ]}

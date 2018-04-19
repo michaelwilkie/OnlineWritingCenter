@@ -1,0 +1,27 @@
+.btn {
+	background-color: darkcyan; 
+	color: white;
+}
+
+.btn-doc-action {
+	background-color: lightgray;
+	border-color: gray;
+	color: black;
+}
+
+table,
+th,
+td {
+	padding: 5px 8px;
+  /*border: 1px solid #666;
+  border-collapse: collapse;*/
+}
+
+tr {
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+td {
+	border-bottom: 1px solid #ccc;
+}
