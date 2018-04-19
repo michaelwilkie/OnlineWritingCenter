@@ -1,38 +1,35 @@
-var tutorlist = ["John Smith"		,
-				 "John Smith Smith"	,
-				 "John John Smith"	,
-				 "John Smith Sr."	,
-				 "John Smith Jr."	,
-				 "John Smith III"	,
-				 "John P. Smith"	,
-				 "John Q. Smith"	];
-var majorlist = ["Computer Science"	,
-				 "Architecture"		,
-				 "English"			,
-				 "Business"			,
-				 "Engineering"		];
+var tutorlist = [];
+
+var req = new XMLHttpRequest();
+req.add
+
+$.getJSON( "data/tutor.json", function( data ) 
+{
+	tutorlist = data.Tutors;
+	console.log((tutorlist));
+});
+ 
 var repeatnotfound = false;
-var dict = [];
 function initDictionary()
 {
-	for (var i = 0; i < tutorlist.length; i++)
-	{
-		dict.push({
-			name: tutorlist[i],
-			major: majorlist[Math.floor(Math.random() * 5)]
-		});
-	}
 	var table = document.getElementById("tutortable");
+	
 	for (var i = 0; i < tutorlist.length; i++)
 	{
 		var entry = document.createElement('tr');
 		var td = document.createElement('td');
-		td.innerHTML = dict[i].name;
-		var td2= document.createElement('td');
-		td2.innerHTML = dict[i].major;
+		td.innerHTML = tutorlist[i].fname;
+		var td2 = document.createElement('td');
+		td2.innerHTML = tutorlist[i].lname;
+		var td3 = document.createElement('td');
+		td3.innerHTML = tutorlist[i].major;
 		entry.appendChild(td);
 		entry.appendChild(td2);
+		entry.appendChild(td3);
 		table.appendChild(entry);
+		console.log(td);
+		console.log(td2);
+		console.log(td3);
 	}
 }
 function Search() 
@@ -51,6 +48,7 @@ function Search()
 			else
 				tr[i].style.display = "none";
 	}
+	//alert(tutorlistQ);
 }
 function ClearSearch() 
 {
