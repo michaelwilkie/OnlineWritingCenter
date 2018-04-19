@@ -55,7 +55,7 @@
       <!-- Make appointment button -->
       <div class="text-center">
         <form action="#">
-        <input id="schedulebutton" class="btn" type="submit" value="Set Appointment" />
+        <input id="schedulebutton" class="btn" type="submit" value="Make new appointment" />
         </form>
       </div>
     </div>
@@ -111,13 +111,60 @@
       let tutors = [];
       $.getJSON("data/tutor.json", function(data) { tutors = data.Tutors; });
 
+      // Load the list of documents
+      let docs = [];
+      $.getJSON("data/document.json", function(data) { docs = data.Documents; });      
+
       // Navbar
       $("#welcomeMsg").html("Welcome, student <a href='#' id='username'>Hai Tran</a><br />");
       $("#switchview").text("Switch to Tutor View");
       $("#pageList").html();
 
       // Left Panel
+      $.getJSON("data/appointment.json", function(data) {
+        if (data.Appointments.length == 0) {
+          $("#appointmentList").append("<p>You do not have any upcoming appointments</p>");
 
+        } else {
+          let hasAppointment = false;
+          data.Appointments.forEach(function(aptmnt) {
+            hasAppointment = hasAppointment || (aptmnt.studentid == userid);
+          });
+
+          if (!hasAppointment) {
+            $("#appointmentList").append("<p>You do not have any upcoming appointments</p>");
+          
+          } else {
+            data.Appointments.forEach(function(aptmnt) {
+              if (aptmnt.studentid == userid) {
+                let aptmntHtml = "<div class='card' style='padding: 5px; margin: 10px'>";
+                aptmntHtml += "<div class='card-body'>";
+                aptmntHtml += "<p class='card-subtitle mb-2 text-muted'><small>"
+                aptmntHtml += aptmnt.datetime;
+                aptmntHtml += "</small></p>";
+                aptmntHtml += "<p class='card-text text-left'>";
+                
+                aptmntHtml += "Meet tutor <a href='#'>";
+                tutors.forEach(function(tut) {
+                  if (tut.id == aptmnt.tutorid) 
+                    aptmntHtml += tut.fname + " " + tut.lname + "</a>";
+                });
+                
+                aptmntHtml += " to review the document ";
+                docs.forEach(function(doc) {
+                  if (doc.id == aptmnt.fileid) {
+                    aptmntHtml += "<a href='" + doc.url + "'>";
+                    aptmntHtml += doc.title + "</a>";
+                  }
+                });
+
+                aptmntHtml += "</p></div></div>";
+                $("#appointmentList").append(aptmntHtml);
+              }
+            });
+          }
+        }
+      });
 
       // Center Panel
       $.getJSON("data/document.json", function(data) {
@@ -162,7 +209,7 @@
         console.log(data);
         data.Notifications.forEach(function(noti) {
           if (noti.receivertype == usertype && noti.receiverid == userid) {
-            let notiHtml = "<div class='card' style='padding: 5px;'>";
+            let notiHtml = "<div class='card' style='padding: 5px; margin: 10px'>";
             notiHtml += "<div class='card-body'>";
             notiHtml += "<p class='card-subtitle mb-2 text-muted'><small>"
             notiHtml += noti.timestamp;
@@ -185,7 +232,13 @@
                 break;
               
               case "response":  // Response
-                notiHtml += "";
+                notiHtml += "Tutor <a href='#'>";
+                tutors.forEach(function(tut) {
+                  if (tut.id == noti.senderid) {
+                    notiHtml += tut.fname + " " + tut.lname;    
+                  }
+                })
+                notiHtml += "</a> has accepted your appointment request.";
                 break;
               
               default:  // Nothing
