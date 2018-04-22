@@ -21,7 +21,7 @@
         <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Tutor</a>
+          <a class="nav-link" href="#" onclick="loadCenter('tutorsearch')">Tutor</a>
         </li>
       </ul>
 
@@ -55,7 +55,7 @@
       <!-- Make appointment button -->
       <div class="text-center">
         <form action="#">
-        <input id="schedulebutton" class="btn" type="submit" value="Make new appointment" />
+        <input id="schedulebutton" class="btn" type="submit" value="Make new appointment " />
         </form>
       </div>
     </div>
@@ -120,7 +120,13 @@
       // Load the list of documents
       let docs = [];
       $.getJSON("data/document.json", function(data) { docs = data.Documents; });
-
+		
+	  var appointmentList 	= new AppointmentList	("data/appointment.json"	);
+	  $("#appointmentList").append(AppointmentList.toString());
+	  var notificationList 	= new NotificationList	("data/notification.json"	);
+	  $("#notificationList").append(NotificationList.toString());
+	  var studentList 		= new StudentList		("data/student.json"		);
+		/*
       // Left Panel
       $.getJSON("data/appointment.json", function(data) {
         if (data.Appointments.length == 0) {
@@ -165,47 +171,11 @@
             });
           }
         }
-      });
+      });*/
 
-      // Center Panel
-      $("#centerCol").append("<div class='text-center'><h3>Your Documents</h3></div><div id='documentList'></div>");
+      loadCenter();
 
-      $.getJSON("data/document.json", function(data) {
-        
-        if (data.Documents.length == 0) {
-          $("#documentList").append("<p>You have not shared any document yet</p>");
-          $("#documentList").append("<div class='text-center' style='margin-top: 20px'><input class='btn' type='button' value='Share a new document' onclick='' /></div>");
-
-        } else {
-          let ownDocs = false;
-          data.Documents.forEach(function(doc) {
-            ownDocs = ownDocs || (doc.studentid == userid);
-          });
-
-          if (!ownDocs) {
-            $("#documentList").append("<p class='text-center'>You have not shared any document yet</p>");
-            $("#documentList").append("<div class='text-center' style='margin-top: 20px'><input class='btn' type='button' value='Share a new document' onclick='' /></div>");
-
-          
-          } else {
-            $("#documentList").append("<table class='table'><tbody>");
-            data.Documents.forEach(function(doc) {
-              if (doc.studentid == userid) {
-                $("#documentList").append("<tr class='row col-sm-12'>");
-                $("#documentList").append("<td class='col-sm-6'>" + doc.title + "</td>");
-                $("#documentList").append("<td class='col-sm-3'><input class='btn btn-doc-action' type='button' value='Open in a new tab' onclick='window.open(\x22" + doc.url + "\x22)' /></td>");
-                $("#documentList").append("<td class='col-sm-3'><input class='btn btn-doc-action' type='button' value='Request a review' onclick='' /></td>");
-                $("#documentList").append("</tr>");
-              }
-            });
-            $("#documentList").append("</tbody></table>");
-            $("#documentList").append("<div class='text-center' style='margin-top: 20px'><input class='btn' type='button' value='Share a new document' onclick='' /></div>");
-
-          }
-        }
-      });
-
-      
+      /*
       // Right Panel
       $.getJSON("data/notification.json", function(data) {
         console.log(data);
@@ -250,7 +220,7 @@
             $("#notificationList").append(notiHtml);
           }
         });
-      });
+      });*/
     }
 
     function loadTutorView(userid) {
@@ -274,7 +244,7 @@
       $.getJSON("data/document.json", function(data) { docs = data.Documents; });
 
       // Left Panel
-      $.getJSON("data/appointment.json", function(data) {
+      /*$.getJSON("data/appointment.json", function(data) {
         if (data.Appointments.length == 0) {
           $("#appointmentList").append("<p class='text-center'>You do not have any upcoming appointments</p>");
 
@@ -317,12 +287,12 @@
             });
           }
         }
-      });
+      });*/
 
       // Center Panel
       $("#centerCol").append("<div class='text-center'><h3>Requests</h3></div><div id='requestList'></div>");
 
-      
+      /*
       // Right Panel
       $.getJSON("data/notification.json", function(data) {
         console.log(data);
@@ -368,7 +338,14 @@
             $("#notificationList").append(notiHtml);
           }
         });
-      })
+      });*/
     }
   </script>
+    <script src="scripts/index.js"></script>
+	<script src="scripts/searchs.js"></script>
+	<script>
+	$(document).on("keyup", function() {
+			Search();
+		});
+		</script>
 </body>
