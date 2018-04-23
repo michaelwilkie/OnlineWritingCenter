@@ -1,4 +1,7 @@
 $(document).ready(function() {
+	// Debug mode
+	var isDebug = true;
+
 	// A short jQuery extension to read query parameters from the URL.
   // Referenced from the Candy Crush homework assignment.
   $.extend({
@@ -21,6 +24,7 @@ $(document).ready(function() {
   // Parameters from the URL
   var usertype = $.getUrlVar("usertype");
   var userid = $.getUrlVar("userid");
+  if (isDebug) console.log(usertype, userid);
 
   // Data
   var students = [];
@@ -31,7 +35,6 @@ $(document).ready(function() {
 
   // Start
   loadHomepage();
-  console.log(students, tutors, documents, notifications, appointments);
 
   function loadHomepage() {
   	// Remove all previously displayed content
@@ -39,6 +42,7 @@ $(document).ready(function() {
 
   	// Reload data
   	loadAllData();
+  	if (isDebug) console.log(students, tutors, documents, notifications, appointments);
 
   	// Navigation bar
   	var navbarHtml = "<a class='navbar-brand' href='index.html?usertype=" + usertype + "&userid=" + userid + "'><h2>Online Writing Center</h2></a>";
@@ -117,6 +121,39 @@ $(document).ready(function() {
 		loadHomeCenterCol();
 		loadHomeRightCol();
 
+		// Make an appointment
+		$("#btnMakeAppointment").click(function() {
+			chooseType();
+
+			function chooseType() {
+				chooseTimeSlot();
+			}
+
+			function chooseTimeSlot() {
+				$("#centerCol").empty();
+				
+				var centerColHtml = "<div class='text-center'><h3>Make An Appointment</h3></div><div id='documentList'></div>";
+				centerColHtml += "When do you want to meet a tutor?";
+				centerColHtml += "<table><tr><td><input class='col-xs-2' type='radio' name='radioTimeslot id='radioTimeslot1' /></td><td>Immediately</td></tr>";
+				centerColHtml += "<tr><td><input class='col-xs-2' type='radio' name='radioTimeslot id='radioTimeslot2' /></td><td>Select a timeslot";
+				centerColHtml += "<table><tr><td>Date</td><td></td></tr><tr><td>Time</td><td></td></tr></table>";
+				centerColHtml += "</td></tr></table>";
+				/*
+				centerColHtml += "<label for='radioTimeslot1'><input class='col-xs-2' type='radio' name='radioTimeslot id='radioTimeslot1' /><span class='col-xs-10'>Immediately</span></label>";
+				centerColHtml += "<label for='radioTimeslot2'><input class='col-xs-2' type='radio' name='radioTimeslot' id='radioTimeslot2' /><span class='col-xs-10'>Choose a timeslot</span>";
+				centerColHtml += "";
+				centerColHtml += "</label>";
+				*/
+
+				$("#centerCol").html(centerColHtml);
+			}
+
+			function chooseTutor() {
+
+			}
+
+		});
+
 		function loadHomeLeftCol() {
 			var leftColHtml = "<div class='text-center'><h3>Schedule</h3></div>";
 	  	leftColHtml += "<div class='text-center'>Upcoming appointments:</div>";
@@ -145,7 +182,7 @@ $(document).ready(function() {
 	            aptmntHtml += "</small></p>";
 	            aptmntHtml += "<p class='card-text text-left'>";
 	            
-	            aptmntHtml += "Meet tutor <a href='#'>";
+	            aptmntHtml += "Meet tutor <a href=''>";
 	            tutors.forEach(function(tut) {
 	              if (tut.id == aptmnt.tutorid) 
 	                aptmntHtml += tut.fname + " " + tut.lname + "</a>";
@@ -166,7 +203,7 @@ $(document).ready(function() {
 	      }
 	    }
 
-	    $("#leftCol").append("<div class='text-center'><form action='#'><input id='schedulebutton' class='btn' type='submit' value='Make new appointment' /></form></div>");
+	    $("#leftCol").append("<div class='text-center'><button id='btnMakeAppointment' class='btn' value='Make new appointment'>Make An Appointment</button></div>");
 		}
 
 		function loadHomeCenterCol() {
