@@ -35,6 +35,7 @@ $(document).ready(function() {
 
   // Start
   loadHomepage();
+  if (isDebug) console.log(students, tutors, documents, notifications, appointments);
 
   function loadHomepage() {
   	// Remove all previously displayed content
@@ -42,7 +43,6 @@ $(document).ready(function() {
 
   	// Reload data
   	loadAllData();
-  	if (isDebug) console.log(students, tutors, documents, notifications, appointments);
 
   	// Navigation bar
   	var navbarHtml = "<a class='navbar-brand' href='index.html?usertype=" + usertype + "&userid=" + userid + "'><h2>Online Writing Center</h2></a>";
@@ -133,17 +133,27 @@ $(document).ready(function() {
 				$("#centerCol").empty();
 				
 				var centerColHtml = "<div class='text-center'><h3>Make An Appointment</h3></div><div id='documentList'></div>";
-				centerColHtml += "When do you want to meet a tutor?";
-				centerColHtml += "<table><tr><td><input class='col-xs-2' type='radio' name='radioTimeslot id='radioTimeslot1' /></td><td>Immediately</td></tr>";
-				centerColHtml += "<tr><td><input class='col-xs-2' type='radio' name='radioTimeslot id='radioTimeslot2' /></td><td>Select a timeslot";
-				centerColHtml += "<table><tr><td>Date</td><td></td></tr><tr><td>Time</td><td></td></tr></table>";
-				centerColHtml += "</td></tr></table>";
-				/*
-				centerColHtml += "<label for='radioTimeslot1'><input class='col-xs-2' type='radio' name='radioTimeslot id='radioTimeslot1' /><span class='col-xs-10'>Immediately</span></label>";
-				centerColHtml += "<label for='radioTimeslot2'><input class='col-xs-2' type='radio' name='radioTimeslot' id='radioTimeslot2' /><span class='col-xs-10'>Choose a timeslot</span>";
-				centerColHtml += "";
-				centerColHtml += "</label>";
-				*/
+				centerColHtml += "<form><div class='form-group row'><label for='major' class='col-sm-6 col-form-label'>Please select a subject</label>"
+				centerColHtml += "<div class='col-sm-6'><select class='custom-select' id='major'>";
+				
+				// Generate the list of majors
+				var majorList = new Set();
+				tutors.forEach(function(tut) {
+					majorList.add(tut.major);
+				});
+				majorList = Array.from(majorList);
+				majorList.sort();
+
+				// Populate the select major dropdown
+				majorList.forEach(function(major) {
+					centerColHtml += "<option value='1'>" + major + "</option>";
+				});
+
+				centerColHtml += "</select></div></div>";
+				centerColHtml += "<div class='form-group row'><label for='datepicker' class='col-sm-6'>Please select a timeslot for your appointment:</label>";
+				centerColHtml += "<div class='col-xs-6'><input type='text' id='datepicker'>";
+				centerColHtml += "<script>$('#datepicker').datetimepicker({controlType: 'select', oneLine: true, timeFormat: 'hh:mm tt', stepHour: 1, stepMinute: 30, hourMin: 8, hourMax: 17, showOn:'button', buttonImage: 'https://jqueryui.com/resources/demos/datepicker/images/calendar.gif', buttonImageOnly: true, buttonText: 'Select date',minDate: 0});$('#datepicker').datepicker('option', 'showAnim', 'slideDown' );</script>";
+				centerColHtml += "</div></div></form>";
 
 				$("#centerCol").html(centerColHtml);
 			}
