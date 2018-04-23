@@ -25,3 +25,7 @@ tr {
 td {
 	border-bottom: 1px solid #ccc;
 }
+
+#datepicker {
+	margin-left: 15px;
+}

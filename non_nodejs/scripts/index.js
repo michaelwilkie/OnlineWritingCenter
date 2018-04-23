@@ -123,18 +123,34 @@ $(document).ready(function() {
 
 		// Make an appointment
 		$("#btnMakeAppointment").click(function() {
-			chooseType();
+			chooseOptions();
 
-			function chooseType() {
-				chooseTimeSlot();
-			}
+			$("#btnViewAvailableTutors").click(function() {
+				var fileId = $("#fileToShare").val();
+				var subject = $( "#major option:selected" ).text();
+				var datetime = $("#datepicker").datetimepicker("getDate");
+				console.log(fileId, subject, datetime);
+				viewAvailableTutors(fileId, subject, datetime);
+			});
 
-			function chooseTimeSlot() {
+			function chooseOptions() {
 				$("#centerCol").empty();
 				
 				var centerColHtml = "<div class='text-center'><h3>Make An Appointment</h3></div><div id='documentList'></div>";
-				centerColHtml += "<form><div class='form-group row'><label for='major' class='col-sm-6 col-form-label'>Please select a subject</label>"
-				centerColHtml += "<div class='col-sm-6'><select class='custom-select' id='major'>";
+				centerColHtml += "<form>";
+				centerColHtml += "<div class='form-group row'><label for='fileToShare' class='col-sm-6 col-form-label'>Please select a file:</label>"
+				centerColHtml += "<div class='col-sm-6'><select class='custom-select form-control' id='fileToShare'>";
+				
+				// Generate the list of majors
+				for (let i=0; i < documents.length; i++) {
+					if (documents[i].studentid == userid) {
+						centerColHtml += "<option value='" + i + "'>" + documents[i].title + "</option>";
+					}
+				}
+
+				centerColHtml += "</select></div></div>";
+				centerColHtml += "<div class='form-group row'><label for='major' class='col-sm-6 col-form-label'>Please select a subject:</label>"
+				centerColHtml += "<div class='col-sm-6'><select class='custom-select form-control' id='major'>";
 				
 				// Generate the list of majors
 				var majorList = new Set();
@@ -145,21 +161,45 @@ $(document).ready(function() {
 				majorList.sort();
 
 				// Populate the select major dropdown
-				majorList.forEach(function(major) {
-					centerColHtml += "<option value='1'>" + major + "</option>";
-				});
+				for (let i = 0; i < majorList.length; i++) {
+					centerColHtml += "<option value='" + (i+1) + "'>" + majorList[i] + "</option>";
+				}
 
 				centerColHtml += "</select></div></div>";
-				centerColHtml += "<div class='form-group row'><label for='datepicker' class='col-sm-6'>Please select a timeslot for your appointment:</label>";
-				centerColHtml += "<div class='col-xs-6'><input type='text' id='datepicker'>";
-				centerColHtml += "<script>$('#datepicker').datetimepicker({controlType: 'select', oneLine: true, timeFormat: 'hh:mm tt', stepHour: 1, stepMinute: 30, hourMin: 8, hourMax: 17, showOn:'button', buttonImage: 'https://jqueryui.com/resources/demos/datepicker/images/calendar.gif', buttonImageOnly: true, buttonText: 'Select date',minDate: 0});$('#datepicker').datepicker('option', 'showAnim', 'slideDown' );</script>";
-				centerColHtml += "</div></div></form>";
+				centerColHtml += "<div class='form-group row'><label for='datepicker' class='col-sm-6'>Please select a timeslot:</label>";
+				centerColHtml += "<div class='col-xs-6'><input type='text' class='form-control' id='datepicker'></div>";
+				centerColHtml += "</div></form>";
+				centerColHtml += "<script>$('#datepicker').datetimepicker({autoSize: false, controlType: 'select', oneLine: true, timeFormat: 'hh:mm tt', stepHour: 1, stepMinute: 30, hourMin: 8, hourMax: 17, minDate: 0 });$('#datepicker').datepicker('option', 'showAnim', 'slideDown' );</script>";
 
+				centerColHtml += "<button class='btn' id='btnViewAvailableTutors'>View available tutors</button><hr>"
+				
 				$("#centerCol").html(centerColHtml);
-			}
+			}			
 
-			function chooseTutor() {
+			function viewAvailableTutors(fileId, subject, datetime) {
+				var availableTutors = [];
 
+				tutors.forEach(function(tut) {
+					if (tut.major == subject) availableTutors.push(tut); 
+				})
+
+				var avaTutHtml = "<tbody>";
+				if (availableTutors.length > 0) {
+					availableTutors.forEach(function(avatut) {
+						avaTutHtml += "<tr>";
+						avaTutHtml += "<td>" + avatut.fname + " " + avatut.lname + "</td>";
+						avaTutHtml += "<td align='right'><button class='btn'>View profile</button></td>";
+						avaTutHtml += "<td align='right'><button class='btn'>Send appointment request</button></td>";
+						avaTutHtml += "</tr>";
+					})
+				} else {
+					avaTutHtml += "No tutor is available";
+				}
+				avaTutHtml += "</tbody>";	
+				
+
+				if ($("#availableTutorList").length) {} else { $("#centerCol").append("<div class='text-center'><h5>Tutors available during the selected timeslot</h5></div><table class='table' id='availableTutorList'></table>"); }
+				$("#availableTutorList").html(avaTutHtml);
 			}
 
 		});
