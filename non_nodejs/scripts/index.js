@@ -83,22 +83,27 @@ $(document).ready(function() {
 
   function loadHomepage() {
   	// Navigation bar
-  	var navbar = "";
-  	navbar += "<a class='navbar-brand' href='index.html?usertype=" + usertype +"&userid=" + userid + "'><h2>Online Writing Center</h2></a>";
-  	navbar += "<button class='navbar-toggler' type='button' data-toggle='collapse' data-target='#navbarSupportedContent' aria-controls='navbarSupportedContent' aria-expanded='false' aria-label='Toggle navigation'><span class='navbar-toggler-icon'></span></button>";
-  	navbar += "<div class='collapse navbar-collapse' id='navbarSupportedContent'>";
-  	navbar += "<ul class='navbar-nav mr-auto' style='display: table; margin-top: auto; margin-bottom: auto' id='pageList'>";
-  	navbar += "<li class='nav-item active' style='vertical-align: middle; display: table-cell'><a class='nav-link' href='index.html?usertype=" + usertype +"&userid=" + userid + "'>Home <span class='sr-only'>(current)</span></a></li>";
-  	navbar += "</ul>";
-  	navbar += "<div class='d-inline-block pull-right'><p class='text-right'><span id='welcomeMsg'></span><a href='#' id='switchview'>Switch to Tutor View</a> | <a href='#'' id='signout'>Sign out</a></p></div>";
-  	navbar += "</div>";
-  	$("#navbar").html(navbar);
+  	var navbarHtml = "<a class='navbar-brand' href='index.html?usertype=" + usertype + "&userid=" + userid + "'><h2>Online Writing Center</h2></a>";
+  	navbarHtml += "<button class='navbar-toggler' type='button' data-toggle='collapse' data-target='#navbarSupportedContent' aria-controls='navbarSupportedContent' aria-expanded='false' aria-label='Toggle navigation'><span class='navbar-toggler-icon'></span></button>";
+  	navbarHtml += "<div class='collapse navbar-collapse' id='navbarSupportedContent'>";
+  	navbarHtml += "<ul class='navbar-nav mr-auto' style='display: table; margin-top: auto; margin-bottom: auto' id='pageList'>";
+  	navbarHtml += "<li class='nav-item active' style='vertical-align: middle; display: table-cell'><a class='nav-link' href='index.html?usertype=" + usertype +"&userid=" + userid + "'>Home <span class='sr-only'>(current)</span></a></li>";
+  	navbarHtml += "</ul>";
+  	navbarHtml += "<div class='d-inline-block pull-right'><p class='text-right'><span id='welcomeMsg'></span><a href='#' id='switchview'>Switch to Tutor View</a> | <a href='#'' id='signout'>Sign out</a></p></div>";
+  	navbarHtml += "</div>";
+  	$("#navbar").html(navbarHtml);
 
   	// Left column
+  	var leftColHtml = "<div class='text-center'><h3>Schedule</h3></div>";
+  	leftColHtml += "<div class='text-center'>Upcoming appointments:</div>";
+  	leftColHtml += "<div id='appointmentList'></div>";
+  	$("#leftCol").html(leftColHtml);
 
   	// Center column
 
   	// Right column
+  	var rightColHtml = "<div class='text-center'><h3>Notifications</h3></div><div id='notificationList'></div>";
+  	$("#rightCol").html(rightColHtml);
   }
 
 	function loadStudentView(id) {
@@ -109,7 +114,7 @@ $(document).ready(function() {
       $("#appointmentList").append("<p>You do not have any upcoming appointments</p>");
 
     } else {
-      let hasAppointment = false;
+      var hasAppointment = false;
       appointments.forEach(function(aptmnt) {
         hasAppointment = hasAppointment || (aptmnt.studentid == userid);
       });
@@ -120,7 +125,7 @@ $(document).ready(function() {
       } else {
         appointments.forEach(function(aptmnt) {
           if (aptmnt.studentid == userid) {
-            let aptmntHtml = "<div class='card' style='padding: 5px; margin: 10px'>";
+            var aptmntHtml = "<div class='card' style='padding: 5px; margin: 10px'>";
             aptmntHtml += "<div class='card-body'>";
             aptmntHtml += "<p class='card-subtitle mb-2 text-muted'><small>"
             aptmntHtml += aptmnt.datetime;
@@ -148,6 +153,8 @@ $(document).ready(function() {
       }
     }
 
+    $("#leftCol").append("<div class='text-center'><form action='#'><input id='schedulebutton' class='btn' type='submit' value='Make new appointment' /></form></div>");
+
 	  // Center Panel
 	  $("#centerCol").append("<div class='text-center'><h3>Your Documents</h3></div><div id='documentList'></div>");
 	    
@@ -156,7 +163,7 @@ $(document).ready(function() {
       $("#documentList").append("<div class='text-center' style='margin-top: 20px'><input class='btn' type='button' value='Share a new document' onclick='' /></div>");
 
     } else {
-      let ownDocs = false;
+      var ownDocs = false;
       documents.forEach(function(doc) {
         ownDocs = ownDocs || (doc.studentid == userid);
       });
@@ -183,47 +190,62 @@ $(document).ready(function() {
     }
 
 	  // Right Panel
-    notifications.forEach(function(noti) {
-      if (noti.receivertype == usertype && noti.receiverid == userid) {
-        let notiHtml = "<div class='card' style='padding: 5px; margin: 10px'>";
-        notiHtml += "<div class='card-body'>";
-        notiHtml += "<p class='card-subtitle mb-2 text-muted'><small>"
-        notiHtml += noti.timestamp;
-        notiHtml += "</small></p>";
-        notiHtml += "<p class='card-text text-left'>";
+	  if (notifications.length == 0) {
+      $("#notificationList").append("<p class='text-center'>There is no notification.</p>");
 
-        switch(noti.type) {
-          case "file change":
-            notiHtml += "Tutor <a href='#'>";
-            tutors.forEach(function(tut) {
-              if (tut.id == noti.senderid) {
-                notiHtml += tut.fname + " " + tut.lname;    
-              }
-            })
-            notiHtml += "</a> has made changes to your file.";
-            break;
+    } else {
+    	var hasNoti = false;
+    	notifications.forEach(function(noti) {
+    		hasNoti = hasNoti || (noti.receivertype == usertype && noti.receiverid == userid);
+    	});
 
-          case "request":
-            break;
-          
-          case "response":  // Response
-            notiHtml += "Tutor <a href='#'>";
-            tutors.forEach(function(tut) {
-              if (tut.id == noti.senderid) {
-                notiHtml += tut.fname + " " + tut.lname;    
-              }
-            })
-            notiHtml += "</a> has accepted your appointment request.";
-            break;
-          
-          default:  // Nothing
-            break;
-        }
+    	if (!hasNoti) {
+    		$("#notificationList").append("<p class='text-center'>There is no notification.</p>");
+    		
+    	} else {
+    		notifications.forEach(function(noti) {
+		      if (noti.receivertype == usertype && noti.receiverid == userid) {
+		        var notiHtml = "<div class='card' style='padding: 5px; margin: 10px'>";
+		        notiHtml += "<div class='card-body'>";
+		        notiHtml += "<p class='card-subtitle mb-2 text-muted'><small>"
+		        notiHtml += noti.timestamp;
+		        notiHtml += "</small></p>";
+		        notiHtml += "<p class='card-text text-left'>";
 
-        notiHtml += "</p></div></div>";
-        $("#notificationList").append(notiHtml);
-      }
-    });
+		        switch(noti.type) {
+		          case "file change":
+		            notiHtml += "Tutor <a href='#'>";
+		            tutors.forEach(function(tut) {
+		              if (tut.id == noti.senderid) {
+		                notiHtml += tut.fname + " " + tut.lname;    
+		              }
+		            })
+		            notiHtml += "</a> has made changes to your file.";
+		            break;
+
+		          case "request":
+		            break;
+		          
+		          case "response":  // Response
+		            notiHtml += "Tutor <a href='#'>";
+		            tutors.forEach(function(tut) {
+		              if (tut.id == noti.senderid) {
+		                notiHtml += tut.fname + " " + tut.lname;    
+		              }
+		            })
+		            notiHtml += "</a> has accepted your appointment request.";
+		            break;
+		          
+		          default:  // Nothing
+		            break;
+		        }
+
+		        notiHtml += "</p></div></div>";
+		        $("#notificationList").append(notiHtml);
+		      }
+		    });
+    	}
+	  }
 
     function modifyNavbar() {
 			// Navbar
@@ -248,7 +270,7 @@ $(document).ready(function() {
       $("#appointmentList").append("<p class='text-center'>You do not have any upcoming appointments</p>");
 
     } else {
-      let hasAppointment = false;
+      var hasAppointment = false;
       appointments.forEach(function(aptmnt) {
         hasAppointment = hasAppointment || (aptmnt.tutorid == userid);
       });
@@ -259,7 +281,7 @@ $(document).ready(function() {
       } else {
         appointments.forEach(function(aptmnt) {
           if (aptmnt.tutorid == userid) {
-            let aptmntHtml = "<div class='card' style='padding: 5px; margin: 10px'>";
+            var aptmntHtml = "<div class='card' style='padding: 5px; margin: 10px'>";
             aptmntHtml += "<div class='card-body'>";
             aptmntHtml += "<p class='card-subtitle mb-2 text-muted'><small>"
             aptmntHtml += aptmnt.datetime;
@@ -293,7 +315,7 @@ $(document).ready(function() {
     // Right Panel
     notifications.forEach(function(noti) {
       if (noti.receivertype == usertype && noti.receiverid == userid) {
-        let notiHtml = "<div class='card' style='padding: 5px; margin: 10px'>";
+        var notiHtml = "<div class='card' style='padding: 5px; margin: 10px'>";
         notiHtml += "<div class='card-body'>";
         notiHtml += "<p class='card-subtitle mb-2 text-muted'><small>"
         notiHtml += noti.timestamp;
