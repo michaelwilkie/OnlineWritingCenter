@@ -123,6 +123,7 @@ $(document).ready(function() {
 
 		// Make an appointment
 		$("#btnMakeAppointment").click(chooseAppointmentOptions);
+		$("#btnAddDocument").click(addDocument);
 
 		function chooseAppointmentOptions() {
 			$("#centerCol").empty();
@@ -162,7 +163,7 @@ $(document).ready(function() {
 			centerColHtml += "</div></form>";
 			centerColHtml += "<script>$('#datepicker').datetimepicker({autoSize: false, controlType: 'select', oneLine: true, timeFormat: 'hh:mm tt', stepHour: 1, stepMinute: 30, hourMin: 8, hourMax: 17, minDate: 0 });$('#datepicker').datepicker('option', 'showAnim', 'slideDown' );</script>";
 
-			centerColHtml += "<div class='text-center'><button class='btn backHome' style='margin:10px'>Back</button><button class='btn' id='btnViewAvailableTutors' style='margin:10px'>View available tutors</button></div><hr>"
+			centerColHtml += "<div class='text-center'><button class='btn backHome' style='margin:10px'>Cancel</button><button class='btn' id='btnViewAvailableTutors' style='margin:10px'>View available tutors</button></div><hr>"
 			
 			$("#centerCol").html(centerColHtml);
 
@@ -176,6 +177,61 @@ $(document).ready(function() {
 				
 				viewAvailableTutors(fileId, subject, datetime);
 			});
+		}
+
+		function addDocument() {
+			$("#centerCol").empty();
+
+			var centerColHtml = "<div class='text-center'><h3>Add a document</h3></div><div id='documentList'></div>";
+
+			centerColHtml += "<p>Please upload a document to your Google Drive and share the document with us.</p>";
+			centerColHtml += "<form>";
+
+			centerColHtml += "<div class='form-group row'><label class='col-sm-6 col-form-label'>Link to Google document:</label>"
+			centerColHtml += "<div class='col-sm-6'>";
+			centerColHtml += "<input type='text' class='form-control'>";
+			centerColHtml += "</div></div>";
+
+			centerColHtml += "<div class='form-group row'><label class='col-sm-6 col-form-label'>Title:</label>"
+			centerColHtml += "<div class='col-sm-6'>";
+			centerColHtml += "<input type='text' class='form-control'>";
+			centerColHtml += "</div></div>";
+
+			centerColHtml += "</div></form>";
+
+			centerColHtml += "<div class='text-center'><input type='checkbox' class='form-check-input' id='checkboxRequestAfterSharing'><label class='form-check-label' for='checkboxRequestAfterSharing'>Also request a tutoring session</label></div>";
+
+			centerColHtml += "<div class='text-center'><button class='btn backHome' style='margin:10px'>Cancel</button><button class='btn' id='btnShareDocument' style='margin:10px'>Share document</button></div><hr>";
+
+			$("#centerCol").append(centerColHtml);
+
+			$(".backHome").click(loadHomepage);
+
+			$("#checkboxRequestAfterSharing").click(function() {
+				if($(this).is(":checked")) {
+					$("#btnShareDocument").html("Add document & Set up an appointment");
+					$("#btnShareDocument").addClass("pink");
+				} else {
+					$("#btnShareDocument").html("Add document");
+					$("#btnShareDocument").removeClass("pink");
+				}
+			});
+
+			$("#btnShareDocument").click(function() {
+				if($("#checkboxRequestAfterSharing").is(":checked")) {
+						var fileId = saveDocumentToDatabase();
+						chooseAppointmentOptions(fileId);
+				} else {
+						saveDocumentToDatabase();
+						alert("Your new document has been added!");
+						loadHomepage();
+				}
+			});
+		}
+
+		function saveDocumentToDatabase() {
+			var fileId = Math.round(Math.random() * 10e6);
+			return fileId;
 		}
 
 		function viewAvailableTutors(fileid, subject, datetime) {
@@ -237,7 +293,7 @@ $(document).ready(function() {
 			centerColHtml += "</div></div>";
 
 			centerColHtml += "</div></form>";
-			centerColHtml += "<div class='text-center'><button class='btn' style='margin:10px' id='btnBackToMakeAppointment'>Back</button><button class='btn' id='btnSendAppointmentRequest' style='margin:10px'>Send Appointment Request</button></div><hr>";
+			centerColHtml += "<div class='text-center'><button class='btn' style='margin:10px' id='btnBackToMakeAppointment'>Cancel</button><button class='btn' id='btnSendAppointmentRequest' style='margin:10px'>Send Appointment Request</button></div><hr>";
 				
 			$("#centerCol").html(centerColHtml);	
 
@@ -306,7 +362,7 @@ $(document).ready(function() {
 		    
 	    if (documents.length == 0) {
 	      $("#documentList").append("<p>You have not shared any document yet</p>");
-	      $("#documentList").append("<div class='text-center' style='margin-top: 20px'><input class='btn' type='button' value='Share a new document' onclick='' /></div>");
+	      $("#documentList").append("<div class='text-center' style='margin-top: 20px'><input class='btn' type='button' value='Add a new document' /></div>");
 
 	    } else {
 	      var ownDocs = false;
@@ -331,7 +387,7 @@ $(document).ready(function() {
 	          }
 	        });
 	        $("#documentList").append("</tbody></table>");
-	        $("#documentList").append("<div class='text-center' style='margin-top: 20px'><input class='btn' type='button' value='Share a new document' onclick='' /></div>");
+	        $("#documentList").append("<div class='text-center' style='margin-top: 20px'><input class='btn' type='button' id='btnAddDocument' value='Share a new document' onclick='' /></div>");
 	      }
 	    }
 		}
