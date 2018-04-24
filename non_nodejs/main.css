@@ -3,7 +3,7 @@
 	color: white;
 }
 
-.btn-doc-action {
+.btn-doc-action, .btnAppointmentRequest, .btnAppointmentViewProfile {
 	background-color: lightgray;
 	border-color: gray;
 	color: black;
