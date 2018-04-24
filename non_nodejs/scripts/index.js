@@ -121,22 +121,33 @@ $(document).ready(function() {
 		loadHomeCenterCol();
 		loadHomeRightCol();
 
-		// Make an appointment
-		$("#btnMakeAppointment").click(chooseAppointmentOptions);
+		$("#btnMakeAppointment").click(function() {chooseAppointmentOptions();});
 		$("#btnAddDocument").click(addDocument);
+		$(".btnRequestReview").each(function(index, obj) {
+			$("#" + obj.id).click(function() {
+				if (isDebug) console.log("Request a review on file id #" + obj.id.substring(16));
+				chooseAppointmentOptions(obj.id.substring(16));	
+			})
+		});
 
-		function chooseAppointmentOptions() {
+		function chooseAppointmentOptions(fileId) {
 			$("#centerCol").empty();
 			
 			var centerColHtml = "<div class='text-center'><h3>Make An Appointment</h3></div><div id='documentList'></div>";
 			centerColHtml += "<form>";
 			centerColHtml += "<div class='form-group row'><label for='fileToShare' class='col-sm-6 col-form-label'>Please select a file:</label>"
 			centerColHtml += "<div class='col-sm-6'><select class='custom-select form-control' id='fileToShare'>";
+			// Empty default value
+			if (typeof(fileId) === 'undefined') { centerColHtml += "<option value='' disabled selected> -- Please select an option -- </option>"; }
 			
-			// Generate the list of majors
+			// Generate the list of files
 			for (let i=0; i < documents.length; i++) {
 				if (documents[i].studentid == userid) {
-					centerColHtml += "<option value='" + documents[i].id + "'>" + documents[i].title + "</option>";
+					if (documents[i].id == fileId) {
+						centerColHtml += "<option value='" + documents[i].id + "' selected>" + documents[i].title + "</option>";
+					} else {
+						centerColHtml += "<option value='" + documents[i].id + "'>" + documents[i].title + "</option>";
+					}
 				}
 			}
 
@@ -153,6 +164,7 @@ $(document).ready(function() {
 			majorList.sort();
 
 			// Populate the select major dropdown
+			centerColHtml += "<option value='' disabled selected> -- Please select an option -- </option>";
 			for (let i = 0; i < majorList.length; i++) {
 				centerColHtml += "<option value='" + (i+1) + "'>" + majorList[i] + "</option>";
 			}
@@ -169,13 +181,17 @@ $(document).ready(function() {
 
 			$(".backHome").click(loadHomepage);
 			$("#btnViewAvailableTutors").click(function() {
-				var fileId = $("#fileToShare").val();
-				var subject = $( "#major option:selected" ).text();
-				var datetime = $("#datepicker").datetimepicker("getDate");
+				if ($("#major").val() == null || $("#fileToShare").val() == null) {
+					alert("One or more options are not selected");
+				} else {
+					var fileId = $("#fileToShare").val();
+					var subject = $( "#major option:selected" ).text();
+					var datetime = $("#datepicker").datetimepicker("getDate");
 
-				if (isDebug) console.log(fileId, subject, datetime);
-				
-				viewAvailableTutors(fileId, subject, datetime);
+					if (isDebug) console.log(fileId, subject, datetime);
+					
+					viewAvailableTutors(fileId, subject, datetime);
+				}				
 			});
 		}
 
@@ -184,7 +200,7 @@ $(document).ready(function() {
 
 			var centerColHtml = "<div class='text-center'><h3>Add a document</h3></div><div id='documentList'></div>";
 
-			centerColHtml += "<p>Please upload a document to your Google Drive and share the document with us.</p>";
+			centerColHtml += "<p>Please upload a document to your Google Drive and share the link to the document.</p>";
 			centerColHtml += "<form>";
 
 			centerColHtml += "<div class='form-group row'><label class='col-sm-6 col-form-label'>Link to Google document:</label>"
@@ -382,7 +398,7 @@ $(document).ready(function() {
 	            $("#documentList").append("<tr class='row col-sm-12'>");
 	            $("#documentList").append("<td class='col-sm-6'>" + doc.title + "</td>");
 	            $("#documentList").append("<td class='col-sm-3'><input class='btn btn-doc-action' type='button' value='Open in a new tab' onclick='window.open(\x22" + doc.url + "\x22)' /></td>");
-	            $("#documentList").append("<td class='col-sm-3'><input class='btn btn-doc-action' type='button' value='Request a review' onclick='' /></td>");
+	            $("#documentList").append("<td class='col-sm-3'><input class='btn btn-doc-action btnRequestReview' type='button' value='Request a review' id='btnRequestReview" + doc.id + "' /></td>");
 	            $("#documentList").append("</tr>");
 	          }
 	        });
