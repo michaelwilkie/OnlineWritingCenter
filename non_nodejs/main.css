@@ -3,7 +3,7 @@
 	color: white;
 }
 
-.btn-doc-action, .btnAppointmentRequest, .btnAppointmentViewProfile, .btnClearGoal {
+.btn-doc-action, .btnAppointmentRequest, .btnAppointmentViewProfile, .btnClearGoal .btnEndSession {
 	background-color: lightgray;
 	border-color: gray;
 	color: black;
@@ -55,4 +55,12 @@ td {
 .strikethroughtext {
 	text-decoration: line-through;
 	color:#666;
+}
+
+#timer {
+	margin-left: 10px;
+}
+
+.text-center {
+	margin-bottom: 10px;
 }

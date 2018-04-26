@@ -417,27 +417,27 @@ $(document).ready(function() {
 
 					// Goal 1
 					if (aptmnt.goal1.length > 0) {
-						leftColHtml += "<div id='goal1'><input type='checkbox' id='checkboxGoal1' style='margin-left: 10px'/>";
+						leftColHtml += "<div class='sessionGoal' id='goal1'><input type='checkbox' id='checkboxGoal1' style='margin-left: 10px; display:inline-block'/>";
           	leftColHtml += "<label class='form-check-label' id='labelGoal1'> " + aptmnt.goal1 + "</label></div>";	
 					}
 					// Goal 2
 					if (aptmnt.goal2.length > 0) {
-						leftColHtml += "<div id='goal2'><input type='checkbox' id='checkboxGoal2' style='margin-left: 10px'/>";
+						leftColHtml += "<div class='sessionGoal' id='goal2'><input type='checkbox' id='checkboxGoal2' style='margin-left: 10px; display:inline-block'/>";
           	leftColHtml += "<label class='form-check-label' id='labelGoal2'> " + aptmnt.goal2 + "</label></div>";	
 					}
 					// Goal 3
 					if (aptmnt.goal3.length > 0) {
-						leftColHtml += "<div id='goal3'><input type='checkbox' id='checkboxGoal3' style='margin-left: 10px'/>";
+						leftColHtml += "<div class='sessionGoal' id='goal3'><input type='checkbox' id='checkboxGoal3' style='margin-left: 10px; display:inline-block'/>";
           	leftColHtml += "<label class='form-check-label' id='labelGoal3'> " + aptmnt.goal3 + "</label></div>";	
 					}
 					// Goal 4
 					if (aptmnt.goal4.length > 0) {
-						leftColHtml += "<div id='goal4'><input type='checkbox' id='checkboxGoal4' style='margin-left: 10px'/>";
+						leftColHtml += "<div class='sessionGoal' id='goal4'><input type='checkbox' id='checkboxGoal4' style='margin-left: 10px; display:inline-block'/>";
           	leftColHtml += "<label class='form-check-label' id='labelGoal4'> " + aptmnt.goal4 + "</label></div>";	
 					}
 					// Goal 5
 					if (aptmnt.goal5.length > 0) {
-						leftColHtml += "<div id='goal5'><input type='checkbox' id='checkboxGoal5' style='margin-left: 10px'/>";
+						leftColHtml += "<div class='sessionGoal' id='goal5'><input type='checkbox' id='checkboxGoal5' style='margin-left: 10px; display:inline-block'/>";
           	leftColHtml += "<label class='form-check-label' id='labelGoal5'> " + aptmnt.goal5 + "</label></div>";	
 					}
 
@@ -445,21 +445,83 @@ $(document).ready(function() {
 					documents.forEach(function(doc) {
 						if (doc.id == aptmnt.fileid) {
 							if (isDebug) console.log(doc.url);
-							centerColHtml += "<div class='row'><iframe class='resp-iframe' src='" + doc.url + "?embedded=true'><p>Your browser does not support iframes.</p></iframe></div>";
+							//centerColHtml += "<div class='row'><iframe class='resp-iframe' src='" + doc.url + "?embedded=true'><p>Your browser does not support iframes.</p></iframe></div>";
 						}
 					});
 				}
 			});
 
+			// Timer
+			leftColHtml += "<div class='text-center' style='margin-top:20px'><h3>Timer</h3></div><div id='timer'><span id='timestamp'>00:00:00</span> / <span id='timexpire'>00:00:00</span></div>";
+			leftColHtml += "<div class='text-center' style='margin-top:20px'><button class='btn btnEndSession'>End Session</button></div>";
+			leftColHtml += "<div id='dialog-confirm' title='End session?' style='visibility:hidden' id='sessionEndConfirmation'><p><span class='ui-icon ui-icon-alert' style='float:left; margin:12px 12px 20px 0;''></span >Are you sure you want to end this session?</p></div>";
+
 			$("#leftCol").html(leftColHtml);
 			$("#centerCol").html(centerColHtml);
 			
-			for (var i = 1; i <= 5; i++) {
-				$("#checkboxGoal"+i).click(function() {
-					alert("checkbox" + i + " clicked");
-					//$("#checkboxGoal"+i).toggle();
+			// Timer
+			var time = 0;
+			var timexpire = 15;
+			var timerID;
+			String.prototype.toHHMMSS = function () {
+				var sec_num = parseInt(this, 10); // don't forget the second param
+				var hours   = Math.floor(sec_num / 3600);
+				var minutes = Math.floor((sec_num - (hours * 3600)) / 60);
+				var seconds = sec_num - (hours * 3600) - (minutes * 60);
+				if (hours   < 10) {hours   = "0"+hours;}
+				if (minutes < 10) {minutes = "0"+minutes;}
+				if (seconds < 10) {seconds = "0"+seconds;}
+				return hours+':'+minutes+':'+seconds;
+			}
+
+			startTimer();
+			
+			$(".sessionGoal").each(function(index, goal) {
+				var i = goal.id.substring(4);
+				if (isDebug) console.log(i);
+				$("#goal"+i).click(function() {
+					$("#checkboxGoal"+i).attr("checked", !$("#checkboxGoal"+i).attr("checked"));
 					$("#labelGoal"+i).toggleClass("strikethroughtext");
 				})
+			})
+
+			$(".btnEndSession").click(function() {
+				$("#sessionEndConfirmation").css("visibility", "visible");
+				$( "#dialog-confirm" ).dialog({
+		      resizable: false,
+		      height: "auto",
+		      width: 400,
+		      modal: true,
+		      buttons: {
+		        "Yes": function() {
+		          $( this ).dialog( "close" );
+		          loadHomepage();
+		        },
+		        No: function() {
+		          $( this ).dialog( "close" );
+		        }
+		      }
+		    });
+				//loadHomepage();
+			})
+					
+			function startTimer()
+			{
+				timerID = window.setInterval(updateTimer, 1000);
+				$("#timexpire").html("Expire: " + timexpire.toString().toHHMMSS());
+			}
+			function updateTimer()
+			{
+				time++;
+				$("#timestamp").html("Time: " + time.toString().toHHMMSS());
+				if (time >= timexpire)
+				{
+					window.clearInterval(timerID);
+					alert("Tutoring session has expired! Click ok to continue to home page.");
+					loadHomepage();
+					//var index = document.location.href.lastIndexOf('/');
+					//document.location.href = document.location.href.substr(0, index + 1) + "index.html";
+				}
 			}
 		}
 
