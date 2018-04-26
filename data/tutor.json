@@ -1,7 +1,0 @@
-{"Tutors": [
-	{"id":"1", "fname":"Hai", "lname":"Tran", "major":"Photography"},
-	{"id":"2", "fname":"Sid", "lname":"Basu", "major":"Philosophy"},
-	{"id":"3", "fname":"Taylor", "lname":"Momsen", "major":"Theatre"},
-	{"id":"4", "fname":"Janine", "lname":"Benyus", "major":"Biology"},
-	{"id":"5", "fname":"Linda", "lname":"Goodman", "major":"English Literature"}
-]}
