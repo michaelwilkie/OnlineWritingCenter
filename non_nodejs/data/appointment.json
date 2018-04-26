@@ -6,6 +6,11 @@
 		"tutorid":"3", 
 		"fileid":"1",
 		"description":"Assignment 1",
+		"goal1":"Review algorithms",
+		"goal2":"Check the answer of problem 2",
+		"goal3":"",
+		"goal4":"",
+		"goal5":"",
 		"status":"pending"
 	},
 	{
@@ -15,6 +20,11 @@
 		"tutorid":"2", 
 		"fileid":"4",
 		"description":"On Nietzsche",
+		"goal1":"Check grammar & spelling",
+		"goal2":"",
+		"goal3":"",
+		"goal4":"",
+		"goal5":"",
 		"status":"accepted"
 	},
 	{	
@@ -24,6 +34,11 @@
 		"tutorid":"2", 
 		"fileid":"3",
 		"description":"Kant",
+		"goal1":"Grammar",
+		"goal2":"Citation",
+		"goal3":"",
+		"goal4":"",
+		"goal5":"",
 		"status":"rejected"
 	},
 	{
@@ -33,6 +48,11 @@
 		"tutorid":"5", 
 		"fileid":"2",
 		"description":"Poems in the 18th Century",
+		"goal1":"Grammar",
+		"goal2":"",
+		"goal3":"",
+		"goal4":"",
+		"goal5":"",
 		"status":"accepted"
 	},
 	{
@@ -42,6 +62,11 @@
 		"tutorid":"4", 
 		"fileid":"5",
 		"description":"Insects and their living environments",
+		"goal1":"Citation",
+		"goal2":"Synthesis",
+		"goal3":"",
+		"goal4":"",
+		"goal5":"",
 		"status":"accepted"
 	}
 ]}

@@ -3,7 +3,7 @@
 	color: white;
 }
 
-.btn-doc-action, .btnAppointmentRequest, .btnAppointmentViewProfile {
+.btn-doc-action, .btnAppointmentRequest, .btnAppointmentViewProfile, .btnClearGoal {
 	background-color: lightgray;
 	border-color: gray;
 	color: black;
@@ -11,6 +11,11 @@
 
 .pink {
 	background-color: deeppink;
+}
+
+.activateSession {
+	color: #0275d8;
+	cursor: pointer;
 }
 
 table,
@@ -32,4 +37,22 @@ td {
 
 #datepicker {
 	margin-left: 15px;
+}
+
+.resp-iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+
+#leftCol, #centerCol, #rightCol {
+	height: 100%;
+}
+
+.strikethroughtext {
+	text-decoration: line-through;
+	color:#666;
 }

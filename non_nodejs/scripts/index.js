@@ -195,6 +195,98 @@ $(document).ready(function() {
 			});
 		}
 
+		function viewAvailableTutors(fileid, subject, datetime) {
+			var availableTutors = [];
+
+			tutors.forEach(function(tut) {
+				if (tut.major == subject) availableTutors.push(tut); 
+			})
+
+			var avaTutHtml = "<tbody>";
+			if (availableTutors.length > 0) {
+				availableTutors.forEach(function(avatut) {
+					avaTutHtml += "<tr>";
+					avaTutHtml += "<td>" + avatut.fname + " " + avatut.lname + "</td>";
+					avaTutHtml += "<td align='right'><button class='btn btnAppointmentViewProfile' id=''>View profile</button></td>";
+					avaTutHtml += "<td align='right'><button class='btn btnAppointmentRequest' id='btnAppointmentRequest" + avatut.id + "'>Send appointment request</button></td>";
+					avaTutHtml += "</tr>";
+				})
+			} else {
+				avaTutHtml += "No tutor is available";
+			}
+			avaTutHtml += "</tbody>";	
+			
+			if ($("#availableTutorList").length) {} else { $("#centerCol").append("<div class='text-center'><h5>Tutors available during the selected timeslot</h5></div><table class='table' id='availableTutorList'></table>"); }
+
+			$("#availableTutorList").html(avaTutHtml);
+
+			$(".btnAppointmentRequest").each(function(index, obj) {
+				var tutorid = obj.id.substring(21);
+				if (isDebug) console.log(userid, fileid, tutorid);
+				
+				$("#" + obj.id).click(function() { sendAppointmentRequest(userid, fileid, tutorid, datetime) });
+			});
+		}
+
+		function sendAppointmentRequest(studentId, fileId, tutorId, datetime) {
+			$("#centerCol").empty();
+
+			var centerColHtml = "<div class='text-center'><h3>Appointment Request Review</h3></div><div id='documentList'></div>";	
+
+			// Document
+			centerColHtml += "<form>";
+			centerColHtml += "<div class='form-group row'><label class='col-sm-6 col-form-label'>Selected document:</label>"
+			centerColHtml += "<div class='col-sm-6'>";
+			documents.forEach(function(doc) {
+				if (doc.id == fileId) centerColHtml += "<a href='" + doc.url + "' target='_blank'>" + doc.title + "</a>";
+			})
+			centerColHtml += "</div></div>";
+
+			// Tutor
+			centerColHtml += "<div class='form-group row'><label class='col-sm-6 col-form-label'>Tutor:</label>"
+			centerColHtml += "<div class='col-sm-6'>";
+			tutors.forEach(function(tut) {
+				if (tut.id == tutorId) centerColHtml += tut.fname + " " + tut.lname;
+			})
+			centerColHtml += "</div></div>";
+
+			// Time
+			centerColHtml += "<div class='form-group row'><label class='col-sm-6 col-form-label'>Time:</label>"
+			centerColHtml += "<div class='col-sm-6'>";
+			centerColHtml += datetime;
+			centerColHtml += "</div></div>";
+
+			// Goals
+			centerColHtml += "<div class='row'><label class='col-sm-12 col-form-label'>Goals of this session:</label></div>";
+			centerColHtml += "<div class='row'><div class='col-sm-1'>#1</div><input type='text' class='col-sm-9' id='textareaGoal1' /><input type='button' class='btn btnClearGoal col-sm-2' id='btnClearGoal1' value='Clear' /></div>";
+			centerColHtml += "<div class='row'><div class='col-sm-1'>#2</div><input type='text' class='col-sm-9' id='textareaGoal2' /><input type='button' class='btn btnClearGoal col-sm-2' id='btnClearGoal2' value='Clear' /></div>";
+			centerColHtml += "<div class='row'><div class='col-sm-1'>#3</div><input type='text' class='col-sm-9' id='textareaGoal3' /><input type='button' class='btn btnClearGoal col-sm-2' id='btnClearGoal3' value='Clear' /></div>";
+			centerColHtml += "<div class='row'><div class='col-sm-1'>#4</div><input type='text' class='col-sm-9' id='textareaGoal4' /><input type='button' class='btn btnClearGoal col-sm-2' id='btnClearGoal4' value='Clear' /></div>";
+			centerColHtml += "<div class='row'><div class='col-sm-1'>#5</div><input type='text' class='col-sm-9' id='textareaGoal5' /><input type='button' class='btn btnClearGoal col-sm-2' id='btnClearGoal5' value='Clear' /></div>";
+
+			centerColHtml += "</form>";
+			centerColHtml += "<div class='text-center'><button class='btn' style='margin:10px' id='btnBackToMakeAppointment'>Cancel</button><button class='btn' id='btnSendAppointmentRequest' style='margin:10px'>Send Appointment Request</button></div><hr>";
+				
+			$("#centerCol").html(centerColHtml);	
+
+			$(".btnClearGoal").each(function(index, obj) {
+				$("#btnClearGoal" + obj.id.substring(12)).click(function() {
+					if (isDebug) console.log("Cleared the textbox of goal#" + obj.id.substring(12));
+					$("#textareaGoal" + obj.id.substring(12)).val("");
+				})
+			});
+			$("#btnBackToMakeAppointment").click(chooseAppointmentOptions);
+			$("#btnSendAppointmentRequest").click(function() {
+				saveAppointmentToDatabase();
+				alert("Request sent! Please wait for the tutor to respond. You are going to go back to your homepage.");
+				loadHomepage();
+			})
+		}
+
+		function saveAppointmentToDatabase() {
+			
+		}
+
 		function addDocument() {
 			$("#centerCol").empty();
 
@@ -250,76 +342,6 @@ $(document).ready(function() {
 			return fileId;
 		}
 
-		function viewAvailableTutors(fileid, subject, datetime) {
-			var availableTutors = [];
-
-			tutors.forEach(function(tut) {
-				if (tut.major == subject) availableTutors.push(tut); 
-			})
-
-			var avaTutHtml = "<tbody>";
-			if (availableTutors.length > 0) {
-				availableTutors.forEach(function(avatut) {
-					avaTutHtml += "<tr>";
-					avaTutHtml += "<td>" + avatut.fname + " " + avatut.lname + "</td>";
-					avaTutHtml += "<td align='right'><button class='btn btnAppointmentViewProfile' id=''>View profile</button></td>";
-					avaTutHtml += "<td align='right'><button class='btn btnAppointmentRequest' id='btnAppointmentRequest" + avatut.id + "'>Send appointment request</button></td>";
-					avaTutHtml += "</tr>";
-				})
-			} else {
-				avaTutHtml += "No tutor is available";
-			}
-			avaTutHtml += "</tbody>";	
-			
-			if ($("#availableTutorList").length) {} else { $("#centerCol").append("<div class='text-center'><h5>Tutors available during the selected timeslot</h5></div><table class='table' id='availableTutorList'></table>"); }
-
-			$("#availableTutorList").html(avaTutHtml);
-
-			$(".btnAppointmentRequest").each(function(index, obj) {
-				var tutorid = obj.id.substring(21);
-				if (isDebug) console.log(userid, fileid, tutorid);
-				
-				$("#" + obj.id).click(function() { sendAppointmentRequest(userid, fileid, tutorid, datetime) });
-			});
-		}
-
-		function sendAppointmentRequest(studentId, fileId, tutorId, datetime) {
-			$("#centerCol").empty();
-
-			var centerColHtml = "<div class='text-center'><h3>Appointment Request Review</h3></div><div id='documentList'></div>";	
-
-			centerColHtml += "<form>";
-			centerColHtml += "<div class='form-group row'><label class='col-sm-6 col-form-label'>Selected document:</label>"
-			centerColHtml += "<div class='col-sm-6'>";
-			documents.forEach(function(doc) {
-				if (doc.id == fileId) centerColHtml += "<a href='" + doc.url + "' target='_blank'>" + doc.title + "</a>";
-			})
-			centerColHtml += "</div></div>";
-
-			centerColHtml += "<div class='form-group row'><label class='col-sm-6 col-form-label'>Tutor:</label>"
-			centerColHtml += "<div class='col-sm-6'>";
-			tutors.forEach(function(tut) {
-				if (tut.id == tutorId) centerColHtml += tut.fname + " " + tut.lname;
-			})
-			centerColHtml += "</div></div>";
-
-			centerColHtml += "<div class='form-group row'><label class='col-sm-6 col-form-label'>Time:</label>"
-			centerColHtml += "<div class='col-sm-6'>";
-			centerColHtml += datetime;
-			centerColHtml += "</div></div>";
-
-			centerColHtml += "</div></form>";
-			centerColHtml += "<div class='text-center'><button class='btn' style='margin:10px' id='btnBackToMakeAppointment'>Cancel</button><button class='btn' id='btnSendAppointmentRequest' style='margin:10px'>Send Appointment Request</button></div><hr>";
-				
-			$("#centerCol").html(centerColHtml);	
-
-			$("#btnBackToMakeAppointment").click(chooseAppointmentOptions);
-			$("#btnSendAppointmentRequest").click(function() {
-				alert("Request sent! Please wait for the tutor to respond. You are going to go back to your homepage.");
-				loadHomepage();
-			})
-		}
-
 		function loadHomeLeftCol() {
 			var leftColHtml = "<div class='text-center'><h3>Schedule</h3></div>";
 	  	leftColHtml += "<div class='text-center'>Upcoming appointments:</div>";
@@ -357,8 +379,8 @@ $(document).ready(function() {
 	            aptmntHtml += " to review the document ";
 	            documents.forEach(function(doc) {
 	              if (doc.id == aptmnt.fileid) {
-	                aptmntHtml += "<a href='" + doc.url + "'>";
-	                aptmntHtml += doc.title + "</a>";
+	                aptmntHtml += "<span class='activateSession' id='activateSession" + aptmnt.id + "'>";
+	                aptmntHtml += doc.title + "</span>";
 	              }
 	            });
 
@@ -370,6 +392,75 @@ $(document).ready(function() {
 	    }
 
 	    $("#leftCol").append("<div class='text-center'><button id='btnMakeAppointment' class='btn' value='Make new appointment'>Make An Appointment</button></div>");
+
+	    $(".activateSession").each(function(id, obj) {
+        	$("#activateSession" + obj.id.substring(15)).click(function() {
+        		activateSession(obj.id.substring(15));
+        	})
+        });
+		}
+
+		function activateSession(appointmentId) {
+			// Prepare the columns
+			$("#leftCol").empty();
+			$("#rightCol").hide();
+			$("#centerCol").removeClass("col-sm-6");
+			$("#centerCol").addClass("col-sm-9");
+			$("#centerCol").empty();
+
+			var leftColHtml = "<div class='text-center'><h3>Goals</h3></div>";
+			var centerColHtml = "";
+
+			appointments.forEach(function(aptmnt) {
+				if (aptmnt.id == appointmentId) {
+					if (isDebug) console.log(aptmnt.id, appointmentId);
+
+					// Goal 1
+					if (aptmnt.goal1.length > 0) {
+						leftColHtml += "<div id='goal1'><input type='checkbox' id='checkboxGoal1' style='margin-left: 10px'/>";
+          	leftColHtml += "<label class='form-check-label' id='labelGoal1'> " + aptmnt.goal1 + "</label></div>";	
+					}
+					// Goal 2
+					if (aptmnt.goal2.length > 0) {
+						leftColHtml += "<div id='goal2'><input type='checkbox' id='checkboxGoal2' style='margin-left: 10px'/>";
+          	leftColHtml += "<label class='form-check-label' id='labelGoal2'> " + aptmnt.goal2 + "</label></div>";	
+					}
+					// Goal 3
+					if (aptmnt.goal3.length > 0) {
+						leftColHtml += "<div id='goal3'><input type='checkbox' id='checkboxGoal3' style='margin-left: 10px'/>";
+          	leftColHtml += "<label class='form-check-label' id='labelGoal3'> " + aptmnt.goal3 + "</label></div>";	
+					}
+					// Goal 4
+					if (aptmnt.goal4.length > 0) {
+						leftColHtml += "<div id='goal4'><input type='checkbox' id='checkboxGoal4' style='margin-left: 10px'/>";
+          	leftColHtml += "<label class='form-check-label' id='labelGoal4'> " + aptmnt.goal4 + "</label></div>";	
+					}
+					// Goal 5
+					if (aptmnt.goal5.length > 0) {
+						leftColHtml += "<div id='goal5'><input type='checkbox' id='checkboxGoal5' style='margin-left: 10px'/>";
+          	leftColHtml += "<label class='form-check-label' id='labelGoal5'> " + aptmnt.goal5 + "</label></div>";	
+					}
+
+					// Google Docs
+					documents.forEach(function(doc) {
+						if (doc.id == aptmnt.fileid) {
+							if (isDebug) console.log(doc.url);
+							centerColHtml += "<div class='row'><iframe class='resp-iframe' src='" + doc.url + "?embedded=true'><p>Your browser does not support iframes.</p></iframe></div>";
+						}
+					});
+				}
+			});
+
+			$("#leftCol").html(leftColHtml);
+			$("#centerCol").html(centerColHtml);
+			
+			for (var i = 1; i <= 5; i++) {
+				$("#checkboxGoal"+i).click(function() {
+					alert("checkbox" + i + " clicked");
+					//$("#checkboxGoal"+i).toggle();
+					$("#labelGoal"+i).toggleClass("strikethroughtext");
+				})
+			}
 		}
 
 		function loadHomeCenterCol() {
