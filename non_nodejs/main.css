@@ -3,7 +3,7 @@
 	color: white;
 }
 
-.btn-doc-action, .btnAppointmentRequest, .btnAppointmentViewProfile, .btnClearGoal .btnEndSession {
+.btn-doc-action, .btnAppointmentRequest, .btnAppointmentViewProfile, .btnClearGoal, .btnEndSession {
 	background-color: lightgray;
 	border-color: gray;
 	color: black;

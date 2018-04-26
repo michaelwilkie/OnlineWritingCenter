@@ -445,7 +445,7 @@ $(document).ready(function() {
 					documents.forEach(function(doc) {
 						if (doc.id == aptmnt.fileid) {
 							if (isDebug) console.log(doc.url);
-							//centerColHtml += "<div class='row'><iframe class='resp-iframe' src='" + doc.url + "?embedded=true'><p>Your browser does not support iframes.</p></iframe></div>";
+							centerColHtml += "<div class='row'><iframe class='resp-iframe' src='" + doc.url + "?embedded=true'><p>Your browser does not support iframes.</p></iframe></div>";
 						}
 					});
 				}
@@ -548,7 +548,7 @@ $(document).ready(function() {
 
 	      if (!ownDocs) {
 	        $("#documentList").append("<p class='text-center'>You have not shared any document yet</p>");
-	        $("#documentList").append("<div class='text-center' style='margin-top: 20px'><input class='btn' type='button' value='Share a new document' onclick='' /></div>");
+	        $("#documentList").append("<div class='text-center' style='margin-top: 20px'><input class='btn' type='button' id='btnAddDocument' value='Share a new document' onclick='' /></div>");
 
 	      
 	      } else {
