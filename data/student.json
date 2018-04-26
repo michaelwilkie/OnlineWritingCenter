@@ -1,0 +1,7 @@
+{"Students": [
+	{"id":"1", "fname":"Hai", "lname":"Tran", "major":"Photography"},
+	{"id":"2", "fname":"Dieu", "lname":"Do", "major":"Finance"},
+	{"id":"3", "fname":"Sid", "lname":"Basu", "major":"Philosophy"},
+	{"id":"4", "fname":"Michael", "lname":"Wilkie", "major":"Chemistry"},
+	{"id":"5", "fname":"John", "lname":"Doe", "major":"Mechanical Engineering"}
+]}

@@ -1,0 +1,72 @@
+<header>
+	<title>CS422: Online Writing Center</title>
+	<link rel="stylesheet" href=
+  "https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="mainpage_studentLayout.css">
+	<script src="search.js"></script>
+</header>
+<body onload="initDictionary()">
+	<!-- navbar   -->
+  <nav class="navbar navbar-expand-lg navbar-toggleable-md navbar-light bg-light">
+  	<a class="navbar-brand" href="#"><h2>Online Writing Center</h2></a>
+	  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+	    <span class="navbar-toggler-icon"></span>
+	  </button>
+
+	  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+	    <ul class="navbar-nav mr-auto" style="display: table; margin-top: auto; margin-bottom: auto">
+	      <li class="nav-item active" style="vertical-align: middle; display: table-cell">
+	        <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
+	      </li>
+	      <li class="nav-item">
+	        <a class="nav-link" href="tutor.html">Tutor</a>
+	      </li>
+	    </ul>
+
+	    <div class="d-inline-block pull-right">
+				<p class="text-right">
+					Welcome, student <a href="#">Hai Tran</a><br />
+					<a href="#">Switch to Tutor View &nbsp;</a>
+					<a href="#">Sign out</a>
+				</p>
+			</div>
+
+			<div class="clearfix"></div>
+	  </div>
+	</nav>
+	<!-- /navbar   -->
+	
+	<!-- Center Area -->
+	
+	<hr>
+	<h2 style="text-align: left;padding-left: 100px;">Search</h2>
+	<div class="row" style="height: 100px;">
+	
+		<div class="column left">
+				Search for a tutor:
+		</div>
+		
+		<div class="column right">
+			<input class="btn" type="submit" id="clearbutton" value="Clear results" onclick="ClearSearch()" style="display: none;float:right;" />
+			<input class="btn" type="submit" value="Find" onclick="Search()" style="float: right" />
+			<div style="overflow: hidden; padding-right: .5em;">
+				<input class="form-control" type="text" id="searchbar"/>
+			</div>
+		</div>
+	</div>
+	
+	<br>
+	<div style="padding: 100px;">
+	<div style="float: left; padding-left: 10px;">Tutors:</div>
+	<table class="table table-striped" id="tutortable">
+		<thead>
+		<tr class="header">
+			<th>Name</th>
+			<th>Major</th>
+		</tr>
+		</thead>
+	</table>
+	</div>
+</body>

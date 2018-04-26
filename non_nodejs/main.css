@@ -1,0 +1,35 @@
+.btn {
+	background-color: darkcyan; 
+	color: white;
+}
+
+.btn-doc-action, .btnAppointmentRequest, .btnAppointmentViewProfile {
+	background-color: lightgray;
+	border-color: gray;
+	color: black;
+}
+
+.pink {
+	background-color: deeppink;
+}
+
+table,
+th,
+td {
+	padding: 5px 8px;
+  /*border: 1px solid #666;
+  border-collapse: collapse;*/
+}
+
+tr {
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+td {
+	border-bottom: 1px solid #ccc;
+}
+
+#datepicker {
+	margin-left: 15px;
+}
