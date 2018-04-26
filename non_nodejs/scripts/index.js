@@ -474,6 +474,7 @@ $(document).ready(function() {
 				return hours+':'+minutes+':'+seconds;
 			}
 
+			var isBackHome = false;
 			startTimer();
 			
 			$(".sessionGoal").each(function(index, goal) {
@@ -495,6 +496,10 @@ $(document).ready(function() {
 		      buttons: {
 		        "Yes": function() {
 		          $( this ).dialog( "close" );
+		          isBackHome = true;
+		          $("#rightCol").show();
+							$("#centerCol").addClass("col-sm-6");
+							$("#centerCol").removeClass("col-sm-9");
 		          loadHomepage();
 		        },
 		        No: function() {
@@ -512,15 +517,17 @@ $(document).ready(function() {
 			}
 			function updateTimer()
 			{
-				time++;
+				if (!isBackHome) time++;
 				$("#timestamp").html("Time: " + time.toString().toHHMMSS());
 				if (time >= timexpire)
 				{
 					window.clearInterval(timerID);
 					alert("Tutoring session has expired! Click ok to continue to home page.");
+					isBackHome = true;
+		      $("#rightCol").show();
+					$("#centerCol").addClass("col-sm-6");
+					$("#centerCol").removeClass("col-sm-9");
 					loadHomepage();
-					//var index = document.location.href.lastIndexOf('/');
-					//document.location.href = document.location.href.substr(0, index + 1) + "index.html";
 				}
 			}
 		}
