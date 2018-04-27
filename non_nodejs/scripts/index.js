@@ -482,7 +482,7 @@ $(document).ready(function() {
 	    
 	    $("#switchview").text("Switch to Tutor View");
 	    
-	    $("#navbarSupportedContent ul").append("<li class='nav-item active' style='vertical-align: middle; display: table-cell'><a class='nav-link' href='index.html'>Tutor List <span class='sr-only'>(current)</span></a></li>");
+	    $("#navbarSupportedContent ul").append("<li class='nav-item active' style='vertical-align: middle; display: table-cell'><a class='nav-link' onclick='loadTutorSearchWindow()'>Tutor List <span class='sr-only'>(current)</span></a></li>");
 		}
 	}
 
