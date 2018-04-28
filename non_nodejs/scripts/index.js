@@ -179,6 +179,10 @@ $(document).ready(function() {
 			
 			$("#centerCol").html(centerColHtml);
 
+			$(".btnAppointmentViewProfile").click(function(){
+				console.log(hello);
+			});
+
 			$(".backHome").click(loadHomepage);
 			$("#btnViewAvailableTutors").click(function() {
 				if ($("#major").val() == null || $("#fileToShare").val() == null) {
@@ -661,7 +665,139 @@ $(document).ready(function() {
 	    })
 	    $("#welcomeMsg").append("</a><br />");
 	    $("#switchview").text("Switch to Student View");
-	  }
+		}
+
+		function activateSession(appointmentId) {
+			// Prepare the columns
+			$("#leftCol").empty();
+			$("#rightCol").hide();
+			$("#centerCol").removeClass("col-sm-6");
+			$("#centerCol").addClass("col-sm-9");
+			$("#centerCol").empty();
+
+			var leftColHtml = "<div class='text-center'><h3>Goals</h3></div>";
+			var centerColHtml = "";
+
+			appointments.forEach(function(aptmnt) {
+				if (aptmnt.id == appointmentId) {
+					if (isDebug) console.log(aptmnt.id, appointmentId);
+
+					// Goal 1
+					if (aptmnt.goal1.length > 0) {
+						leftColHtml += "<div class='sessionGoal' id='goal1'><input type='checkbox' id='checkboxGoal1' style='margin-left: 10px; display:inline-block'/>";
+          	leftColHtml += "<label class='form-check-label' id='labelGoal1'> " + aptmnt.goal1 + "</label></div>";	
+					}
+					// Goal 2
+					if (aptmnt.goal2.length > 0) {
+						leftColHtml += "<div class='sessionGoal' id='goal2'><input type='checkbox' id='checkboxGoal2' style='margin-left: 10px; display:inline-block'/>";
+          	leftColHtml += "<label class='form-check-label' id='labelGoal2'> " + aptmnt.goal2 + "</label></div>";	
+					}
+					// Goal 3
+					if (aptmnt.goal3.length > 0) {
+						leftColHtml += "<div class='sessionGoal' id='goal3'><input type='checkbox' id='checkboxGoal3' style='margin-left: 10px; display:inline-block'/>";
+          	leftColHtml += "<label class='form-check-label' id='labelGoal3'> " + aptmnt.goal3 + "</label></div>";	
+					}
+					// Goal 4
+					if (aptmnt.goal4.length > 0) {
+						leftColHtml += "<div class='sessionGoal' id='goal4'><input type='checkbox' id='checkboxGoal4' style='margin-left: 10px; display:inline-block'/>";
+          	leftColHtml += "<label class='form-check-label' id='labelGoal4'> " + aptmnt.goal4 + "</label></div>";	
+					}
+					// Goal 5
+					if (aptmnt.goal5.length > 0) {
+						leftColHtml += "<div class='sessionGoal' id='goal5'><input type='checkbox' id='checkboxGoal5' style='margin-left: 10px; display:inline-block'/>";
+          	leftColHtml += "<label class='form-check-label' id='labelGoal5'> " + aptmnt.goal5 + "</label></div>";	
+					}
+
+					// Google Docs
+					documents.forEach(function(doc) {
+						if (doc.id == aptmnt.fileid) {
+							if (isDebug) console.log(doc.url);
+							centerColHtml += "<div class='row'><iframe class='resp-iframe' src='" + doc.url + "?embedded=true'><p>Your browser does not support iframes.</p></iframe></div>";
+						}
+					});
+				}
+			});
+
+			// Timer
+			leftColHtml += "<div class='text-center' style='margin-top:20px'><h3>Timer</h3></div><div id='timer'><span id='timestamp'>00:00:00</span> / <span id='timexpire'>00:00:00</span></div>";
+			leftColHtml += "<div class='text-center' style='margin-top:20px'><button class='btn btnEndSession'>End Session</button></div>";
+			leftColHtml += "<div id='dialog-confirm' title='End session?' style='visibility:hidden' id='sessionEndConfirmation'><p><span class='ui-icon ui-icon-alert' style='float:left; margin:12px 12px 20px 0;''></span >Are you sure you want to end this session?</p></div>";
+
+			$("#leftCol").html(leftColHtml);
+			$("#centerCol").html(centerColHtml);
+			
+			// Timer
+			var time = 0;
+			var timexpire = 15;
+			var timerID;
+			String.prototype.toHHMMSS = function () {
+				var sec_num = parseInt(this, 10); // don't forget the second param
+				var hours   = Math.floor(sec_num / 3600);
+				var minutes = Math.floor((sec_num - (hours * 3600)) / 60);
+				var seconds = sec_num - (hours * 3600) - (minutes * 60);
+				if (hours   < 10) {hours   = "0"+hours;}
+				if (minutes < 10) {minutes = "0"+minutes;}
+				if (seconds < 10) {seconds = "0"+seconds;}
+				return hours+':'+minutes+':'+seconds;
+			}
+
+			var isBackHome = false;
+			startTimer();
+			
+			$(".sessionGoal").each(function(index, goal) {
+				var i = goal.id.substring(4);
+				if (isDebug) console.log(i);
+				$("#goal"+i).click(function() {
+					$("#checkboxGoal"+i).attr("checked", !$("#checkboxGoal"+i).attr("checked"));
+					$("#labelGoal"+i).toggleClass("strikethroughtext");
+				})
+			})
+
+			$(".btnEndSession").click(function() {
+				$("#sessionEndConfirmation").css("visibility", "visible");
+				$( "#dialog-confirm" ).dialog({
+		      resizable: false,
+		      height: "auto",
+		      width: 400,
+		      modal: true,
+		      buttons: {
+		        "Yes": function() {
+		          $( this ).dialog( "close" );
+		          isBackHome = true;
+		          $("#rightCol").show();
+							$("#centerCol").addClass("col-sm-6");
+							$("#centerCol").removeClass("col-sm-9");
+		          loadHomepage();
+		        },
+		        No: function() {
+		          $( this ).dialog( "close" );
+		        }
+		      }
+		    });
+				//loadHomepage();
+			})
+					
+			function startTimer()
+			{
+				timerID = window.setInterval(updateTimer, 1000);
+				$("#timexpire").html("Expire: " + timexpire.toString().toHHMMSS());
+			}
+			function updateTimer()
+			{
+				if (!isBackHome) time++;
+				$("#timestamp").html("Time: " + time.toString().toHHMMSS());
+				if (time >= timexpire)
+				{
+					window.clearInterval(timerID);
+					alert("Tutoring session has expired! Click ok to continue to home page.");
+					isBackHome = true;
+		      $("#rightCol").show();
+					$("#centerCol").addClass("col-sm-6");
+					$("#centerCol").removeClass("col-sm-9");
+					loadHomepage();
+				}
+			}
+		}
 
 		function loadHomeLeftCol() {
 			var leftColHtml = "<div class='text-center'><h3>Schedule</h3></div>";
@@ -714,7 +850,69 @@ $(document).ready(function() {
 		}
 		
 		function loadHomeCenterCol() {
-	    $("#centerCol").append("<div class='text-center'><h3>Requests</h3></div><div id='requestList'></div>");
+			$("#centerCol").append("<div class='text-center'><h3>Active Reviews</h3></div><div id='reviewingList'></div>");
+			if (documents.length == 0) {
+	      $("#reviewingList").append("<p>You have no shared documents yet</p>");
+	      //$("#reviewingList").append("<div class='text-center' style='margin-top: 20px'><input class='btn' type='button' value='Add a new document' /></div>");
+			}
+			else {
+				var ownDocs = false;
+	      documents.forEach(function(doc) {
+	        ownDocs = ownDocs || (doc.tutorid == userid);
+	      });
+
+	      if (!ownDocs) {
+					//console.log("!owned doc");
+
+	        $("#reviewingList").append("<p class='text-center'>You have no active documents to review</p>");
+	        //$("#documentList").append("<div class='text-center' style='margin-top: 20px'><input class='btn' type='button' id='btnAddDocument' value='Share a new document' onclick='' /></div>");
+
+	      
+	      } else {
+					// console.log("owned doc");
+					//console.log(doc);
+
+					$("#reviewingList").append("<table class='table'><tbody>");
+			
+	        documents.forEach(function(doc) {
+						console.log(doc);
+
+	          //if (doc.studentid == 1) {
+	            $("#reviewingList").append("<tr class='row col-sm-12'>");
+	            $("#reviewingList").append("<td class='col-sm-6'>" + doc.title + "</td>");
+	            $("#reviewingList").append("<td class='col-sm-3'><input class='btn btn-doc-action' type='button' value='Open in a new tab' onclick='window.open(\x22" + doc.url + "\x22)' /></td>");
+	            $("#reviewingList").append("<td class='col-sm-3'><input class='btn btnReviewDocument' type='button' value='Review Document' id='btnReviewDocument" + doc.id + "' /></td>");
+	            $("#reviewingList").append("</tr>");
+	          //}
+	        });
+	        $("#reviewingList").append("</tbody></table>");
+	        //$("#documentList").append("<div class='text-center' style='margin-top: 20px'><input class='btn' type='button' id='btnAddDocument' value='Share a new document' onclick='' /></div>");
+	      }
+			}
+			
+			$(".btnReviewDocument").click(reviewDocument);
+		}
+
+		function reviewDocument(){
+			$("#centerCol").removeClass("col-sm-6");
+			$("#centerCol").addClass("col-sm-9");
+			$("#centerCol").empty();
+			$("#leftCol").empty();
+			$("#rightCol").hide();
+			$("#leftCol").append("<div ><button class='btn' id='btnBack'> < Back</button></div>");
+			$("#leftCol").append("<div class='text-center'><h3>Tasks</h3></div>");
+			
+			$("#centerCol").append("<div class='text-center'><h3>Loading...</h3></div>");
+			$("#centerCol").append("<div class='row'><iframe class='resp-iframe' src='https://docs.google.com/document/d/1NcX4Ni8MEZkaHtvkImCiUdBV0UQM1PSIzguogRw5_Uw/edit'></iframe></div>" );
+			$("#btnBack").click(function(){
+				$("#centerCol").removeClass("col-sm-9");
+				$("#centerCol").addClass("col-sm-6");
+				$("#centerCol").empty();
+				$("#leftCol").empty();
+				$("#rightCol").show();
+				loadHomeCenterCol();
+				loadHomeLeftCol();
+			});
 		}
 
 		function loadHomeRightCol() {
