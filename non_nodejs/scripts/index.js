@@ -899,11 +899,43 @@ $(document).ready(function() {
 			$("#centerCol").empty();
 			$("#leftCol").empty();
 			$("#rightCol").hide();
-			$("#leftCol").append("<div ><button class='btn' id='btnBack'> < Back</button></div>");
-			$("#leftCol").append("<div class='text-center'><h3>Tasks</h3></div>");
-			
+
+			var leftColHtml= "<div ><button class='btn' id='btnBack'> < Back</button></div>";
+			//leftColHtml = "<div class='text-center'><h3>Goals</h3></div>";
+			leftColHtml += "<div class='text-center'><h3>Tasks</h3></div>";
+
+			appointments.forEach(function(aptmnt) {
+					// Goal 1
+					if (aptmnt.goal1.length > 0) {
+						leftColHtml += "<div class='sessionGoal' id='goal1'><input type='checkbox' id='checkboxGoal1' style='margin-left: 10px; display:inline-block'/>";
+          	leftColHtml += "<label class='form-check-label' id='labelGoal1'> " + aptmnt.goal1 + "</label></div>";	
+					}
+					// Goal 2
+					if (aptmnt.goal2.length > 0) {
+						leftColHtml += "<div class='sessionGoal' id='goal2'><input type='checkbox' id='checkboxGoal2' style='margin-left: 10px; display:inline-block'/>";
+          	leftColHtml += "<label class='form-check-label' id='labelGoal2'> " + aptmnt.goal2 + "</label></div>";	
+					}
+					// Goal 3
+					if (aptmnt.goal3.length > 0) {
+						leftColHtml += "<div class='sessionGoal' id='goal3'><input type='checkbox' id='checkboxGoal3' style='margin-left: 10px; display:inline-block'/>";
+          	leftColHtml += "<label class='form-check-label' id='labelGoal3'> " + aptmnt.goal3 + "</label></div>";	
+					}
+					// Goal 4
+					if (aptmnt.goal4.length > 0) {
+						leftColHtml += "<div class='sessionGoal' id='goal4'><input type='checkbox' id='checkboxGoal4' style='margin-left: 10px; display:inline-block'/>";
+          	leftColHtml += "<label class='form-check-label' id='labelGoal4'> " + aptmnt.goal4 + "</label></div>";	
+					}
+					// Goal 5
+					if (aptmnt.goal5.length > 0) {
+						leftColHtml += "<div class='sessionGoal' id='goal5'><input type='checkbox' id='checkboxGoal5' style='margin-left: 10px; display:inline-block'/>";
+          	leftColHtml += "<label class='form-check-label' id='labelGoal5'> " + aptmnt.goal5 + "</label></div>";	
+					}
+				});
+
+			$("#leftCol").html(leftColHtml);
 			$("#centerCol").append("<div class='text-center'><h3>Loading...</h3></div>");
 			$("#centerCol").append("<div class='row'><iframe class='resp-iframe' src='https://docs.google.com/document/d/1NcX4Ni8MEZkaHtvkImCiUdBV0UQM1PSIzguogRw5_Uw/edit'></iframe></div>" );
+			
 			$("#btnBack").click(function(){
 				$("#centerCol").removeClass("col-sm-9");
 				$("#centerCol").addClass("col-sm-6");
