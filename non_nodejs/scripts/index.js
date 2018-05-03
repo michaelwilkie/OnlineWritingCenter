@@ -950,10 +950,15 @@ $(document).ready(function() {
 		function loadHomeRightCol() {
 			var rightColHtml = "<div class='text-center'><h3>Notifications</h3></div><div id='notificationList'></div>";
   		$("#rightCol").html(rightColHtml);
-
-    	notifications.forEach(function(noti) {
+			
+			var notiHtml = "<div class='text-center' id='noNoti'><p>No New Notifications</p></div><div></div>";
+			notiHtml += "</p></div></div>";
+			$("#notificationList").append(notiHtml);
+			
+			notifications.forEach(function(noti) {
 	      if (noti.receivertype == usertype && noti.receiverid == userid) {
-	        var notiHtml = "<div class='card' style='padding: 5px; margin: 10px'>";
+					$("#noNoti").empty();
+	        notiHtml = "<div class='card' style='padding: 5px; margin: 10px'>";
 	        notiHtml += "<div class='card-body'>";
 	        notiHtml += "<p class='card-subtitle mb-2 text-muted'><small>"
 	        notiHtml += noti.timestamp;
@@ -985,7 +990,7 @@ $(document).ready(function() {
 	            notiHtml += "</a> has accepted your appointment request.";
 	            break;
 	          
-	          default:  // Nothing
+						default:  // Nothing
 	            break;
 	        }
 
