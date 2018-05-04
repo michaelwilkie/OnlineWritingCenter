@@ -280,10 +280,24 @@ $(document).ready(function() {
 				})
 			});
 			$("#btnBackToMakeAppointment").click(chooseAppointmentOptions);
-			$("#btnSendAppointmentRequest").click(function() {
+			$("#btnSendAppointmentRequest").click(function() 
+			{
 				saveAppointmentToDatabase();
-				alert("Request sent! Please wait for the tutor to respond. You are going to go back to your homepage.");
-				loadHomepage();
+				//alert("Request sent! Please wait for the tutor to respond. You are going to go back to your homepage.");
+				//loadHomepage();
+
+				 var txt;
+   			     if (confirm("Press a button!")) {
+  		               txt = "Confirmation Complete. You should get an email from the selected Tutor within 24 hours";
+  				  } 
+
+  				  else {
+   			     txt = "You pressed Cancel!";
+   			 }
+  			  document.getElementById("demo").innerHTML = txt;
+  			  loadHomepage();
+
+
 			})
 		}
 
