@@ -1,9 +1,92 @@
+
 $(document).ready(function() {
+/*
+form name="login"
+Username input type="text" name="userid"
+Password input type="password" name="pswrd"
+input type="button" onclick="check(this.form)" value="Login"
+input type="reset" value="Cancel"
+ */
+ logInPage();
+
+function logInPage(){
+ var studentLogin =[];
+ var tutorLogin = [];
+
+			$.ajax({
+			  url: 'data/student.json',
+			  async: false,
+			  dataType: 'json',
+			  success: function (data) { studentLogin = data.Students; }
+			});
+
+			$.ajax({
+			  url: 'data/tutor.json',
+			  async: false,
+			  dataType: 'json',
+			  success: function (data) { tutorLogin = data.Tutors; }
+			});
+
+
+
+// log In Screen
+  	var logInHtml  ="<h2>Online Writing Center</h2><p></p> <p></p>";
+  		logInHtml +="<form name='login'> Username <input type='text' name='userid'/> <p></p>";
+  		logInHtml +="Password <input type='text' name='password'/> <p></p>";
+  		logInHtml +="<form action=''>";
+  		logInHtml +="<input type='radio' name='personType' value='student'> Student<br><input type='radio' name='personType' value='tutor'> Tutor<br>";
+  		logInHtml +="</form>";
+  	    logInHtml +="<button id = 'logInButton'>LOGIN</button> ";
+
+  
+  	
+  	$("#centerCol").html(logInHtml);	
+
+  	$("#logInButton").click(function(){
+
+  		var x = $('input[name=personType]:checked').val();
+  		var username = $("#userid").value;
+  		var password = $("#password").value;
+
+
+  		console.log(x);
+
+  		if(x == "student" ) /*the following code checkes whether the entered userid and password are matching*/
+  		{
+ 		studentLogin.forEach(function(studentL) {
+				if (studentL.username == username && studentL.password == password) 
+					mainPageLoad(x, studentL.id);;
+			})
+		}
+
+		if(x == "tutor")
+		{   		 /*the following code checkes whether the entered userid and password are matching*/
+ 		tutorLogin.forEach(function(tutorL) {
+				if (tutorL.username == username && tutorL.password == password) 
+					mainPageLoad(x, tutorL.id);
+			})
+	}
+ else
+ {
+   alert("Error Password or Username")/*displays error message*/
+  }
+
+  		//mainPageLoad(username, password, usertype);
+
+  	})
+
+
+  }
+
+
+function mainPageLoad( usertype, userid)
+{
 	// Debug mode
 	var isDebug = true;
 
 	// A short jQuery extension to read query parameters from the URL.
   // Referenced from the Candy Crush homework assignment.
+
   $.extend({
     getUrlVars: function() {
       var vars = [], pair;
@@ -22,8 +105,8 @@ $(document).ready(function() {
   })
 
   // Parameters from the URL
-  var usertype = $.getUrlVar("usertype");
-  var userid = $.getUrlVar("userid");
+  //var usertype = $.getUrlVar("usertype");
+  //var userid = $.getUrlVar("userid");
   if (isDebug) console.log(usertype, userid);
 
   // Data
@@ -58,6 +141,11 @@ $(document).ready(function() {
   	// Different views for different usertypes
   	if (usertype == "student") loadStudentView();
   	if (usertype == "tutor") loadTutorView();
+
+  	$("#signout").click(function() {
+  		clearAll();
+  		logInPage();
+  	})
 
   	function clearAll() {
   		$("#navbar").empty();
@@ -116,6 +204,8 @@ $(document).ready(function() {
   }
 
 	function loadStudentView() {
+
+
 		modifyNavbar();
 		loadHomeLeftCol();
 		loadHomeCenterCol();
@@ -286,15 +376,20 @@ $(document).ready(function() {
 				//alert("Request sent! Please wait for the tutor to respond. You are going to go back to your homepage.");
 				//loadHomepage();
 
-				 var txt;
-   			     if (confirm("Press a button!")) {
+				 var txt = "Yoy pressed";
+
+
+   			     if (confirm("Press a button!")) 
+   			     {
   		               txt = "Confirmation Complete. You should get an email from the selected Tutor within 24 hours";
   				  } 
 
   				  else {
    			     txt = "You pressed Cancel!";
    			 }
-  			  document.getElementById("demo").innerHTML = txt;
+
+   			 console.log(txt);
+  			  //document.getElementById("demo").innerHTML = txt;
   			  loadHomepage();
 
 
@@ -648,6 +743,7 @@ $(document).ready(function() {
 	    	}
 		  }
 		}
+
 	  
     function modifyNavbar() {
 			// Navbar
@@ -1014,4 +1110,5 @@ $(document).ready(function() {
 	    });
     }
   }
+}
 });
