@@ -55,8 +55,8 @@ $(document).ready(function() {
 					if (!isLoggedIn) alert("Error Password or Username");
 				}
 
-				else if(x == "tutor")
-				{   		 /*the following code checkes whether the entered userid and password are matching*/
+				if(x == "tutor")
+				{   
 		 			tutorLogin.forEach(function(tutorL) {
 						if (tutorL.username == username && tutorL.password == password) {
 							usertype = x;
@@ -64,8 +64,8 @@ $(document).ready(function() {
 							mainPageLoad(usertype, userid);
 							isLoggedIn = true;
 						}
-						if (!isLoggedIn) alert("Error Password or Username");
 					})
+					if (!isLoggedIn) alert("Error Password or Username");
 				}
 		 		else
 				{

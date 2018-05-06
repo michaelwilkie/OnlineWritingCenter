@@ -1,7 +1,7 @@
 {"Tutors": [
-	{"id":"1", "fname":"Hai", "lname":"Tran", "major":"Photography"},
-	{"id":"2", "fname":"Sid", "lname":"Basu", "major":"Philosophy"},
-	{"id":"3", "fname":"Taylor", "lname":"Momsen", "major":"Theatre"},
-	{"id":"4", "fname":"Janine", "lname":"Benyus", "major":"Biology"},
-	{"id":"5", "fname":"Linda", "lname":"Goodman", "major":"English Literature"}
+	{"id":"1", "fname":"Hai", "lname":"Tran", "major":"Photography", "username": "htan2", "password": "password1"},
+	{"id":"2", "fname":"Sid", "lname":"Basu", "major":"Philosophy", "username": "htan2", "password": "password1"},
+	{"id":"3", "fname":"Taylor", "lname":"Momsen", "major":"Theatre", "username": "htan2", "password": "password1"},
+	{"id":"4", "fname":"Janine", "lname":"Benyus", "major":"Biology", "username": "htan2", "password": "password1"},
+	{"id":"5", "fname":"Linda", "lname":"Goodman", "major":"English Literature", "username": "htan2", "password": "password1"}
 ]}
