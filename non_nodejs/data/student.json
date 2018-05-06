@@ -1,7 +1,7 @@
 {"Students": [
-	{"id":"1", "fname":"Hai", "lname":"Tran", "major":"Photography", "userName": "htan2", "password": "password1"},
-	{"id":"2", "fname":"Dieu", "lname":"Do", "major":"Finance", "userName": "htan2", "password": "password1"},
-	{"id":"3", "fname":"Sid", "lname":"Basu", "major":"Philosophy", "userName": "htan2", "password": "password1"},
-	{"id":"4", "fname":"Michael", "lname":"Wilkie", "major":"Chemistry", "userName": "htan2", "password": "password1"},
-	{"id":"5", "fname":"John", "lname":"Doe", "major":"Mechanical Engineering", "userName": "htan2", "password": "password1"}
+	{"id":"1", "fname":"Hai", "lname":"Tran", "major":"Photography", "username": "htan2", "password": "password1"},
+	{"id":"2", "fname":"Dieu", "lname":"Do", "major":"Finance", "username": "htan2", "password": "password1"},
+	{"id":"3", "fname":"Sid", "lname":"Basu", "major":"Philosophy", "username": "htan2", "password": "password1"},
+	{"id":"4", "fname":"Michael", "lname":"Wilkie", "major":"Chemistry", "username": "htan2", "password": "password1"},
+	{"id":"5", "fname":"John", "lname":"Doe", "major":"Mechanical Engineering", "username": "htan2", "password": "password1"}
 ]}

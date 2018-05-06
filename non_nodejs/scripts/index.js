@@ -1,17 +1,14 @@
 
 $(document).ready(function() {
-/*
-form name="login"
-Username input type="text" name="userid"
-Password input type="password" name="pswrd"
-input type="button" onclick="check(this.form)" value="Login"
-input type="reset" value="Cancel"
- */
+ var isLoggedIn = false;
+ var usertype = "";
+ var userid = 0;
  logInPage();
 
-function logInPage(){
- var studentLogin =[];
- var tutorLogin = [];
+	function logInPage(){
+		if (!isLoggedIn) {
+			var studentLogin =[];
+	 		var tutorLogin = [];
 
 			$.ajax({
 			  url: 'data/student.json',
@@ -27,66 +24,69 @@ function logInPage(){
 			  success: function (data) { tutorLogin = data.Tutors; }
 			});
 
+			// log In Screen
+	  	var logInHtml  ="<h2>Online Writing Center</h2><p></p> <p></p>";
+			logInHtml +="<form name='login'> Username <input type='text' id='userid'/> <p></p>";
+			logInHtml +="Password <input type='password' id='password'/> <p></p>";
+			logInHtml +="<form action=''>Log in as: ";
+			logInHtml +="<input type='radio' name='personType' value='student'> Student <input type='radio' name='personType' value='tutor'> Tutor<br>";
+			logInHtml +="</form>";
+	    logInHtml +="<button id = 'logInButton'>LOGIN</button> ";
 
+	  	$("#centerCol").html(logInHtml);	
 
-// log In Screen
-  	var logInHtml  ="<h2>Online Writing Center</h2><p></p> <p></p>";
-  		logInHtml +="<form name='login'> Username <input type='text' name='userid'/> <p></p>";
-  		logInHtml +="Password <input type='text' name='password'/> <p></p>";
-  		logInHtml +="<form action=''>";
-  		logInHtml +="<input type='radio' name='personType' value='student'> Student<br><input type='radio' name='personType' value='tutor'> Tutor<br>";
-  		logInHtml +="</form>";
-  	    logInHtml +="<button id = 'logInButton'>LOGIN</button> ";
+	  	$("#logInButton").click(function(){
 
-  
-  	
-  	$("#centerCol").html(logInHtml);	
+	  		var x = $('input[name=personType]:checked').val();
+	  		var username = $("#userid").val();
+	  		var password = $("#password").val();
 
-  	$("#logInButton").click(function(){
+	  		if(x == "student" ) /*the following code checkes whether the entered userid and password are matching*/
+	  		{
+			 		studentLogin.forEach(function(studentL) {
+						if (studentL.username == username && studentL.password == password) {
+							usertype = x;
+							userid = studentL.id;
+							mainPageLoad(usertype, userid);
+							isLoggedIn = true;
+						}
+					})
 
-  		var x = $('input[name=personType]:checked').val();
-  		var username = $("#userid").value;
-  		var password = $("#password").value;
+					if (!isLoggedIn) alert("Error Password or Username");
+				}
 
+				else if(x == "tutor")
+				{   		 /*the following code checkes whether the entered userid and password are matching*/
+		 			tutorLogin.forEach(function(tutorL) {
+						if (tutorL.username == username && tutorL.password == password) {
+							usertype = x;
+							userid = tutorL.id;
+							mainPageLoad(usertype, userid);
+							isLoggedIn = true;
+						}
+						if (!isLoggedIn) alert("Error Password or Username");
+					})
+				}
+		 		else
+				{
+			  	alert("Error Password or Username")/*displays error message*/
+			  }
+		  })
 
-  		console.log(x);
-
-  		if(x == "student" ) /*the following code checkes whether the entered userid and password are matching*/
-  		{
- 		studentLogin.forEach(function(studentL) {
-				if (studentL.username == username && studentL.password == password) 
-					mainPageLoad(x, studentL.id);;
-			})
+		} else {
+			mainPageLoad(usertype, userid);
 		}
-
-		if(x == "tutor")
-		{   		 /*the following code checkes whether the entered userid and password are matching*/
- 		tutorLogin.forEach(function(tutorL) {
-				if (tutorL.username == username && tutorL.password == password) 
-					mainPageLoad(x, tutorL.id);
-			})
-	}
- else
- {
-   alert("Error Password or Username")/*displays error message*/
-  }
-
-  		//mainPageLoad(username, password, usertype);
-
-  	})
-
-
   }
 
 
-function mainPageLoad( usertype, userid)
+function mainPageLoad(usertype, userid)
 {
 	// Debug mode
 	var isDebug = true;
 
 	// A short jQuery extension to read query parameters from the URL.
   // Referenced from the Candy Crush homework assignment.
-
+  /*
   $.extend({
     getUrlVars: function() {
       var vars = [], pair;
@@ -103,10 +103,11 @@ function mainPageLoad( usertype, userid)
       return $.getUrlVars()[name];
     }
   })
-
   // Parameters from the URL
   //var usertype = $.getUrlVar("usertype");
   //var userid = $.getUrlVar("userid");
+  */
+  
   if (isDebug) console.log(usertype, userid);
 
   // Data
@@ -128,11 +129,11 @@ function mainPageLoad( usertype, userid)
   	loadAllData();
 
   	// Navigation bar
-  	var navbarHtml = "<a class='navbar-brand' href='index.html?usertype=" + usertype + "&userid=" + userid + "'><h2>Online Writing Center</h2></a>";
+  	var navbarHtml = "<a class='navbar-brand' href='index.html' class='goHome'><h2>Online Writing Center</h2></a>";
   	navbarHtml += "<button class='navbar-toggler' type='button' data-toggle='collapse' data-target='#navbarSupportedContent' aria-controls='navbarSupportedContent' aria-expanded='false' aria-label='Toggle navigation'><span class='navbar-toggler-icon'></span></button>";
   	navbarHtml += "<div class='collapse navbar-collapse' id='navbarSupportedContent'>";
   	navbarHtml += "<ul class='navbar-nav mr-auto' style='display: table; margin-top: auto; margin-bottom: auto' id='pageList'>";
-  	navbarHtml += "<li class='nav-item active' style='vertical-align: middle; display: table-cell'><a class='nav-link' href='index.html?usertype=" + usertype +"&userid=" + userid + "'>Home <span class='sr-only'>(current)</span></a></li>";
+  	navbarHtml += "<li class='nav-item active' style='vertical-align: middle; display: table-cell'><a class='nav-link' href='index.html' class='goHome'>Home <span class='sr-only'>(current)</span></a></li>";
   	navbarHtml += "</ul>";
   	navbarHtml += "<div class='d-inline-block pull-right'><p class='text-right'><span id='welcomeMsg'></span><a href='#' id='switchview'>Switch to Tutor View</a> | <a href='#'' id='signout'>Sign out</a></p></div>";
   	navbarHtml += "</div>";
@@ -143,8 +144,14 @@ function mainPageLoad( usertype, userid)
   	if (usertype == "tutor") loadTutorView();
 
   	$("#signout").click(function() {
+  		isLoggedIn = false;
   		clearAll();
   		logInPage();
+  	});
+
+  	$(".goHome").click(function(){
+  		clearAll();
+  		loadHomepage();
   	})
 
   	function clearAll() {
@@ -156,13 +163,6 @@ function mainPageLoad( usertype, userid)
 
   	// Gather data. Not a good way to do in practice but convenient for this small assignment.
 	  function loadAllData() {
-	  	/*
-	  	$.getJSON("data/student.json", function(data) { students = data.Students; });
-	  	$.getJSON("data/tutor.json", function(data) { tutors = data.Tutors; });
-	  	$.getJSON("data/document.json", function(data) { documents = data.Documents; });
-	  	$.getJSON("data/notification.json", function(data) { notifications = data.Notifications; });
-	  	$.getJSON("data/appointment.json", function(data) { appointments = data.Appointments; });
-	  	*/
 
 	  	// Load data synchronously. Note that this method is deprecated by jquery
 	  	// and I don't know any alternative.
@@ -204,8 +204,6 @@ function mainPageLoad( usertype, userid)
   }
 
 	function loadStudentView() {
-
-
 		modifyNavbar();
 		loadHomeLeftCol();
 		loadHomeCenterCol();
@@ -373,26 +371,8 @@ function mainPageLoad( usertype, userid)
 			$("#btnSendAppointmentRequest").click(function() 
 			{
 				saveAppointmentToDatabase();
-				//alert("Request sent! Please wait for the tutor to respond. You are going to go back to your homepage.");
-				//loadHomepage();
-
-				 var txt = "Yoy pressed";
-
-
-   			     if (confirm("Press a button!")) 
-   			     {
-  		               txt = "Confirmation Complete. You should get an email from the selected Tutor within 24 hours";
-  				  } 
-
-  				  else {
-   			     txt = "You pressed Cancel!";
-   			 }
-
-   			 console.log(txt);
-  			  //document.getElementById("demo").innerHTML = txt;
-  			  loadHomepage();
-
-
+				alert("Request sent! Please wait for the tutor to respond. You are going to go back to your homepage.");
+				loadHomepage();
 			})
 		}
 
